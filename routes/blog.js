@@ -1,7 +1,7 @@
 const router = require('express').Router()
 const Blog = require('../models/blog')
 
-import {
+const {
     createBlog,
     updateBlog,
     getBlog,
@@ -9,7 +9,7 @@ import {
     createBlogComment,
     getBlogComments,
     deleteBlog
-} from '../controllers/blog'
+} = require('../controllers/blog')
 
 router.get('/', getBlogs)
 
