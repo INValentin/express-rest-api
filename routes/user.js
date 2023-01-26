@@ -1,12 +1,12 @@
 const router = require('express').Router()
 
-import {
+const {
     getAllUsers,
     getUser,
     updateUser,
     deleteUser,
     createUser
-} from '../controllers/user'
+} = require('../controllers/user')
 
 
 router.get('/', getAllUsers)
