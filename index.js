@@ -6,12 +6,14 @@ mongoose.set('strictQuery', false);
 require('dotenv').config()
 const blogRoutes = require('./routes/blog')
 const userRoutes = require('./routes/user')
+const authRoutes = require('./routes/auth')
 
 const app = express()
 app.use(express.json())
 
 app.use('/blogs', blogRoutes)
 app.use('/users', userRoutes)
+app.use('/auth', authRoutes)
 
 const init = async () => {
     try {

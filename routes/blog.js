@@ -1,5 +1,6 @@
 const router = require('express').Router()
 const Blog = require('../models/blog')
+const authMiddleware  = require('../middleware/auth')
 
 const {
     createBlog,
@@ -21,7 +22,7 @@ router.get('/:id', getBlog)
 router.put('/:id', updateBlog)
 
 
-router.delete('/:id', deleteBlog)
+router.delete('/:id', authMiddleware, deleteBlog)
 
 router.get('/:id/comments', getBlogComments)
 

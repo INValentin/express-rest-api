@@ -5,8 +5,6 @@ exports.getBlogs =  async (req, res) => {
     res.json(blogs)
 }
 
-
-
 exports.createBlog = async (req, res) => {
     try {
         const blog = new Blog({...req.body})
@@ -40,6 +38,7 @@ exports.updateBlog = async (req, res) => {
 
 exports.deleteBlog = async (req, res) => {
     try {
+        if (req.user?.userType !== 'admin') return res.status(403).json({error: 'Only admin can delete blogs.'})
         await Blog.findByIdAndDelete(req.params.id)
         res.status(204).json({msg: "Deleted blog."})
     } catch (error) {
