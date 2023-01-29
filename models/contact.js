@@ -1,6 +1,5 @@
 import mongoose from "mongoose";
 
-
 const contactSchema = new mongoose.Schema({
     fullName: { type: String, required: true },
     message: { type: String, required: true },
@@ -9,5 +8,3 @@ const contactSchema = new mongoose.Schema({
 
 
 export default mongoose.model('blog_contacts', contactSchema)
-
-

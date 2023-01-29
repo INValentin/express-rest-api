@@ -1,0 +1,108 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "version": "1.0.0",
+    "title": "Blogs API",
+    "description": "API for managing blogs"
+  },
+  "paths": {
+    "/blogs": {
+      "get": {
+        "summary": "Retrieve all blogs",
+        "responses": {
+          "200": {
+            "description": "Success"
+          }
+        }
+      },
+      "post": {
+        "summary": "Create a new blog",
+        "parameters": [
+          {
+            "name": "blog",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "type": "object",
+              "properties": {
+                "title": {
+                  "type": "string",
+                  "required": true
+                },
+                "content": {
+                  "type": "string",
+                  "required": true
+                },
+                "author": {
+                  "type": "string",
+                  "required": true
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "Blog created"
+          },
+          "400": {
+            "description": "Incorrect inputs: Blog not created"
+          }
+        }
+      },
+      "put": {
+        "summary": "Update a blog",
+        "parameters": [
+          {
+            "name": "blogId",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "blog",
+            "in": "body",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "title": {
+                  "type": "string"
+                },
+                "content": {
+                  "type": "string"
+                },
+                "author": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        ]
+      },
+      "responses": {
+        "200": {
+          "description": "Blog updated"
+        },
+        "400": {
+          "description": "Incorrect inputs: Blog not updated"
+        }
+      }
+    },
+    "delete": {
+      "summary": "Delete a blog",
+      "parameters": [
+        {
+          "name": "blogId",
+          "in": "path",
+          "required": true,
+          "type": "string"
+        }
+      ],
+      "responses": {
+        "200": {
+          "description": "Blog deleted"
+        }
+      }
+    }
+  }
+}

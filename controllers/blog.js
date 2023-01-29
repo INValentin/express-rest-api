@@ -9,7 +9,7 @@ export async function createBlog(req, res) {
     try {
         const blog = new Blog({...req.body})
         await blog.save()
-        res.json(blog)
+        res.status(201).json(blog)
     } catch (error) {
         res.status(400).json({error: error?.message || "Error" })
     }

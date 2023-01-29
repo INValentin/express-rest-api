@@ -14,8 +14,8 @@ export async function createContact(req, res) {
     try {
         const contact = new Contact({ ...req.body });
         await contact.save()
-        res.json(contact)
-    } catch (error) {
+        res.status(201).json(contact)
+    } catch (error) {``
         console.log("Can't create a contact:\n")
         res.status(400).json({ error: error?.message || 'Can\'t create a contact' })
     }

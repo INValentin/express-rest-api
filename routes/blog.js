@@ -12,7 +12,7 @@ router.post('/', createBlog)
 
 router.get('/:id', getBlog)
 
-router.put('/:id', updateBlog)
+router.put('/:id', authMiddleware, updateBlog)
 
 
 router.delete('/:id', authMiddleware, deleteBlog)

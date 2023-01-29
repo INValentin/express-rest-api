@@ -8,5 +8,5 @@ const blogSchema = new Schema({
 }, { timestamps: true })
 
 
-const blog = model('blogs', blogSchema)
-export default blog
+const Blog = model('blogs', blogSchema)
+export default Blog

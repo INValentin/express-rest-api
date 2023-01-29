@@ -6,7 +6,8 @@
   "type": "module",
   "scripts": {
     "dev": "nodemon --experimental-specifier-resolution=node ./index.js",
-    "start": "node  --experimental-specifier-resolution=node ./index.js"
+    "start": "node  --experimental-specifier-resolution=node ./index.js",
+    "test": "mocha --timeout 10000 --  --experimental-specifier-resolution=node"
   },
   "keywords": [],
   "author": "",
@@ -14,6 +15,13 @@
   "dependencies": {
     "dotenv": "^16.0.3",
     "express": "^4.18.2",
-    "mongoose": "^6.8.4"
+    "mongoose": "^6.8.4",
+    "swagger-ui-express": "^4.6.0"
+  },
+  "devDependencies": {
+    "chai": "^4.3.7",
+    "chai-http": "^4.3.0",
+    "mocha": "^10.2.0",
+    "morgan": "^1.10.0"
   }
 }

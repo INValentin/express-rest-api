@@ -16,7 +16,7 @@ export async function createUser(req, res) {
         if (existingUser) return res.status(400).json({error: 'User with that username exists.'})
         const user = new User({ ...req.body });
         await user.save()
-        res.json(user)
+        res.status(201).json(user)
     } catch (error) {
         console.log("Can't create a user:\n")
         res.status(400).json({ error: error?.message || 'Can\'t create a user' })
