@@ -7,15 +7,17 @@ import { config } from 'dotenv'
 import blogRoutes from './routes/blog';
 import userRoutes from './routes/user';
 import authRoutes from './routes/auth';
+import contactRoutes from './routes/contact'
 
 config()
 
 const app = express()
-app.use(json())
+app.use(json()) 
 
 app.use('/blogs', blogRoutes)
 app.use('/users', userRoutes)
 app.use('/auth', authRoutes)
+app.use('/contacts', contactRoutes)
 
 const init = async () => {
     connect(process.env.DB_URL).then(res => {
