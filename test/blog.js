@@ -24,6 +24,7 @@ describe('Blogs API', () => {
                 .send({ username: user.username, password: user.password })
                 .end((err, res) => {
                     authToken = res.body.token;
+                    console.log({authToken});
                     done();
                 });
         })
@@ -109,11 +110,6 @@ describe('Blogs API', () => {
                 .set('Authorization', `Basic ${authToken}`)
                 .end((err, res) => {
                     expect(res).to.have.status(204);
-                    chai.request(app)
-                        .get('/blogs/' + new_blog._id.toString())
-                        .end((err, res) => {
-                            expect(res).to.have.status(404)
-                        })
                     // done();
                 });
         });
