@@ -1,11 +1,11 @@
-const Blog = require('../models/blog')
+import Blog from '../models/blog.js'
 
-exports.getBlogs =  async (req, res) => {
+export async function getBlogs(req, res) {
     const blogs = await Blog.find()
     res.json(blogs)
 }
 
-exports.createBlog = async (req, res) => {
+export async function createBlog(req, res) {
     try {
         const blog = new Blog({...req.body})
         await blog.save()
@@ -15,7 +15,7 @@ exports.createBlog = async (req, res) => {
     }
 }
 
-exports.getBlog = async (req, res) => {
+export async function getBlog(req, res) {
     try {
         const blog = await Blog.findById(req.params.id)
         if (!blog) return res.status(404).json({error: 'Not found'})
@@ -25,7 +25,7 @@ exports.getBlog = async (req, res) => {
     }
 }
 
-exports.updateBlog = async (req, res) => {
+export async function updateBlog(req, res) {
     try {
         const blog = await Blog.findByIdAndUpdate(req.params.id, {...req.body})
         console.log(req.body)
@@ -36,7 +36,7 @@ exports.updateBlog = async (req, res) => {
     }
 }
 
-exports.deleteBlog = async (req, res) => {
+export async function deleteBlog(req, res) {
     try {
         if (req.user?.userType !== 'admin') return res.status(403).json({error: 'Only admin can delete blogs.'})
         await Blog.findByIdAndDelete(req.params.id)
@@ -46,7 +46,7 @@ exports.deleteBlog = async (req, res) => {
     }
 }
 
-exports.getBlogComments = async (req, res) => {
+export async function getBlogComments(req, res) {
     try {
         const blog = await Blog.findById(req.params.id)
         if (!blog) return res.status(404).json({error: 'Not found'})
@@ -56,7 +56,7 @@ exports.getBlogComments = async (req, res) => {
         res.status(400).json({error: error?.message || "Error" })
     }
 }
-exports.createBlogComment =  async (req, res) => {
+export async function createBlogComment(req, res) {
     const {user, comment} = req.body
 
     if (!user || !comment) return res.status(400).json({error: "user and comment are required"})

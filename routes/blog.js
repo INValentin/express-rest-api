@@ -1,16 +1,9 @@
-const router = require('express').Router()
-const Blog = require('../models/blog')
-const authMiddleware  = require('../middleware/auth')
+import { Router } from 'express'
+import Blog from '../models/blog'
+import authMiddleware from '../middleware/auth'
 
-const {
-    createBlog,
-    updateBlog,
-    getBlog,
-    getBlogs,
-    createBlogComment,
-    getBlogComments,
-    deleteBlog
-} = require('../controllers/blog')
+import { createBlog, updateBlog, getBlog, getBlogs, createBlogComment, getBlogComments, deleteBlog } from '../controllers/blog'
+const router = Router()
 
 router.get('/', getBlogs)
 
@@ -28,4 +21,4 @@ router.get('/:id/comments', getBlogComments)
 
 router.post('/:id/comments/', createBlogComment)
 
-module.exports = router
+export default router

@@ -1,4 +1,4 @@
-const User = require('../models/user')
+import User from '../models/user'
 
 
 const authMiddleware =async (req, res, next) => {
@@ -10,7 +10,8 @@ const authMiddleware =async (req, res, next) => {
     const user = await User.findOne({username})
     if (!user || user.password !== password) return res.status(401).json({error: 'Authentication failed'})
     req.user = user
+    req.isAdmin = user.userType.toLocaleLowerCase() === "admin"
     next()
 }
 
-module.exports = authMiddleware
+export default authMiddleware

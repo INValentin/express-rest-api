@@ -1,6 +1,6 @@
-const User = require('../models/user')
+import User from '../models/user';
 
-exports.getAllUsers = async (req, res) => {
+export async function getAllUsers(req, res) {
     try {
         const users = await User.find()
         res.json(users)
@@ -10,7 +10,7 @@ exports.getAllUsers = async (req, res) => {
     }
 }
 
-exports.createUser = async (req, res) => {
+export async function createUser(req, res) {
     try {
         const existingUser = await User.findOne({ username: req.body.username })
         if (existingUser) return res.status(400).json({error: 'User with that username exists.'})
@@ -24,7 +24,7 @@ exports.createUser = async (req, res) => {
 }
 
 
-exports.getUser = async (req, res) => {
+export async function getUser(req, res) {
     try {
         const user = await User.findById(req.params.id)
         if (!user) return res.status(404).json({ error: "User not found" })
@@ -35,7 +35,7 @@ exports.getUser = async (req, res) => {
     }
 }
 
-exports.updateUser = async (req, res) => {
+export async function updateUser(req, res) {
     try {
         const updatedUser = await User.findByIdAndUpdate(req.params.id, { ...req.body })
         if (!updatedUser) return res.status(404).json({ error: 'User not found' })
@@ -46,7 +46,7 @@ exports.updateUser = async (req, res) => {
     }
 }
 
-exports.deleteUser = async (req, res) => {
+export async function deleteUser(req, res) {
     try {
         const deleted = await User.findByIdAndDelete(req.params.id)
         if (!deleted) return res.status(404).json({ error: 'User not found' })

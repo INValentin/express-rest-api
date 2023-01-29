@@ -1,7 +1,7 @@
-const User = require('../models/user')
+import User from '../models/user'
 
 
-exports.createToken = async (req, res) => {
+export async function createToken(req, res) {
     try {
         const { username, password } = req.body
 

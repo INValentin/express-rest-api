@@ -1,28 +1,31 @@
-const express = require('express')
+import express, { json } from 'express';
 
-const mongoose = require('mongoose')
-mongoose.set('strictQuery', false);
+import { set, connect } from 'mongoose';
+set('strictQuery', false);
 
-require('dotenv').config()
-const blogRoutes = require('./routes/blog')
-const userRoutes = require('./routes/user')
-const authRoutes = require('./routes/auth')
+import { config } from 'dotenv'
+import blogRoutes from './routes/blog';
+import userRoutes from './routes/user';
+import authRoutes from './routes/auth';
+
+config()
 
 const app = express()
-app.use(express.json())
+app.use(json())
 
 app.use('/blogs', blogRoutes)
 app.use('/users', userRoutes)
 app.use('/auth', authRoutes)
 
 const init = async () => {
-    try {
-        await mongoose.connect(process.env.DB_URL)
+    connect(process.env.DB_URL).then(res => {
+
         console.log("DB Connected!");
         app.listen(6000, () => console.log('Listening on 6000'))
-    } catch (error) {
-     console.log("\nDatabase connection failed: \n", error)   
-    }
+    }).catch(error => {
+
+        console.log("\nDatabase connection failed: \n", error)
+    })
 }
 
 init()

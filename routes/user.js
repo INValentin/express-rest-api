@@ -1,13 +1,7 @@
-const router = require('express').Router()
+import { Router } from 'express'
+import { getAllUsers, getUser, updateUser, deleteUser, createUser } from '../controllers/user'
 
-const {
-    getAllUsers,
-    getUser,
-    updateUser,
-    deleteUser,
-    createUser
-} = require('../controllers/user')
-
+const router = Router()
 
 router.get('/', getAllUsers)
 router.post('/', createUser)
@@ -16,4 +10,4 @@ router.put('/:id', updateUser)
 router.delete('/:id', deleteUser)
 
 
-module.exports = router
+export default router

@@ -1,6 +1,8 @@
-const router = require('express').Router()
-const { createToken } = require('../controllers/auth')
+import { Router } from 'express'
+
+const router = Router()
+import { createToken } from '../controllers/auth'
 
 router.post('/create-token', createToken)
 
-module.exports = router
+export default router
