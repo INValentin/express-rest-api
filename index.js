@@ -20,6 +20,7 @@ const PORT = process.env.NODE_ENV === 'test' ? 5017 : (
 )
 
 config()
+console.log(process.env.DB_URL)
 
 const app = express()
 app.use(json())
@@ -44,7 +45,7 @@ const init = async () => {
     })
 }
 
-init()
+await init()
 
 
 export default app

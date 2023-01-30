@@ -20,13 +20,14 @@ describe('Blogs API', () => {
         const user = new User({ username: random(), password: random(), fullName: random(), userType: 'admin' })
         user.save().then(result => {
             chai.request(app)
-                .post('/login')
+                .post('/auth/login')
                 .send({ username: user.username, password: user.password })
                 .end((err, res) => {
                     authToken = res.body.token;
-                    console.log({authToken});
                     done();
                 });
+        }).catch(err => {
+            done()
         })
     });
 
@@ -110,7 +111,6 @@ describe('Blogs API', () => {
                 .set('Authorization', `Basic ${authToken}`)
                 .end((err, res) => {
                     expect(res).to.have.status(204);
-                    // done();
                 });
         });
     });

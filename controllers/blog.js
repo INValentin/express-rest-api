@@ -11,49 +11,49 @@ export async function createBlog(req, res) {
         await blog.save()
         res.status(201).json(blog)
     } catch (error) {
-        res.status(400).json({error: error?.message || "Error" })
+        res.status(400).json({error: error?.message || "Something went wrong!" })
     }
 }
 
 export async function getBlog(req, res) {
     try {
         const blog = await Blog.findById(req.params.id)
-        if (!blog) return res.status(404).json({error: 'Not found'})
+        if (!blog) return res.status(404).json({error: 'Blog not found'})
         res.json(blog)
     } catch (error) {
-        res.status(400).json({error: error?.message || "Error" })
+        res.status(400).json({error: error?.message || "Something went wrong!" })
     }
 }
 
 export async function updateBlog(req, res) {
     try {
         const blog = await Blog.findByIdAndUpdate(req.params.id, {...req.body})
-        console.log(req.body)
-        if (!blog) return res.status(404).json({error: 'Not found'})
+        if (!blog) return res.status(404).json({error: 'Blog not found'})
         res.json(await Blog.findById(req.params.id))
     } catch (error) {
-        res.status(400).json({error: error?.message || "Error" })
+        res.status(400).json({error: error?.message || "Something went wrong!" })
     }
 }
 
 export async function deleteBlog(req, res) {
     try {
         if (req.user?.userType !== 'admin') return res.status(403).json({error: 'Only admin can delete blogs.'})
-        await Blog.findByIdAndDelete(req.params.id)
+        const blog = await Blog.findByIdAndDelete(req.params.id)
+        if (!blog) return res.status(404).json({error: 'Blog not found'})
         res.status(204).json({msg: "Deleted blog."})
     } catch (error) {
-        res.status(400).json({error: error?.message || "Error" })
+        res.status(400).json({error: error?.message || "Something went wrong!" })
     }
 }
 
 export async function getBlogComments(req, res) {
     try {
         const blog = await Blog.findById(req.params.id)
-        if (!blog) return res.status(404).json({error: 'Not found'})
+        if (!blog) return res.status(404).json({error: 'Blog not found'})
 
         res.json(blog.comments)
     } catch (error) {
-        res.status(400).json({error: error?.message || "Error" })
+        res.status(400).json({error: error?.message || "Something went wrong!" })
     }
 }
 export async function createBlogComment(req, res) {
@@ -62,7 +62,7 @@ export async function createBlogComment(req, res) {
     if (!user || !comment) return res.status(400).json({error: "user and comment are required"})
 
     const blog = await Blog.findById(req.params.id)
-    if (!blog) return res.status(404).json({error: 'Not found'})
+    if (!blog) return res.status(404).json({error: 'Blog not found'})
     let cmt = {id: blog.comments.length, user, comment}
     blog.comments.push(cmt)
 
