@@ -3,7 +3,7 @@ process.env.PORT = 5017
 
 import chai from 'chai';
 import chaiHttp from 'chai-http';
-import User from '../models/user';
+// import User from '../models/user';
 import Blog from '../models/blog';
 import app from '../';
 
@@ -17,17 +17,14 @@ describe('Blogs API', () => {
 
     before((done) => {
         // log in as an admin user to get authentication token
-        const user = new User({ username: random(), password: random(), fullName: random(), userType: 'admin' })
-        user.save().then(result => {
-            chai.request(app)
-                .post('/auth/login')
-                .send({ username: user.username, password: user.password })
-                .end((err, res) => {
-                    authToken = res.body.token;
-                    console.log({authToken});
-                    done();
-                });
-        })
+        chai.request(app)
+            .post('/auth/login')
+            .send({ username: "newboy", password: "123" })
+            .end((err, res) => {
+                authToken = res.body.token;
+                console.log({ authToken });
+                done();
+            });
     });
 
     describe('GET /blogs', () => {
@@ -66,14 +63,7 @@ describe('Blogs API', () => {
     });
 
     describe('PUT /blogs/:id', () => {
-        it('should update a blog', async () => {
-            const new_blog = new Blog({
-                title: "test-" + random(),
-                author: 'test-' + random(),
-                content: 'test-content-' + random()
-            })
-
-            await new_blog.save()
+        it('should update a blog', (done) => {
 
             const updatedBlog = {
                 author: 'Jane Doe',
@@ -82,7 +72,7 @@ describe('Blogs API', () => {
             };
 
             chai.request(app)
-                .put('/blogs/' + new_blog._id.toString())
+                .put(`/blogs/63d6e02c92edd8aeef19992c`)
                 .set('Authorization', `Basic ${authToken}`)
                 .send(updatedBlog)
                 .end((err, res) => {
@@ -91,7 +81,7 @@ describe('Blogs API', () => {
                     expect(res.body.author).to.equal(updatedBlog.author);
                     expect(res.body.title).to.equal(updatedBlog.title);
                     expect(res.body.content).to.equal(updatedBlog.content);
-                    // done();
+                    done();
                 });
         });
     });
@@ -103,14 +93,13 @@ describe('Blogs API', () => {
                 author: 'delete-test-' + random(),
                 content: 'delete-test-content-' + random()
             })
-            await new_blog.save()
-
+            
+            await new_blog.save();
             chai.request(app)
                 .delete('/blogs/' + new_blog._id.toString())
                 .set('Authorization', `Basic ${authToken}`)
                 .end((err, res) => {
                     expect(res).to.have.status(204);
-                    // done();
                 });
         });
     });

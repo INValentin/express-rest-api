@@ -12,7 +12,7 @@ const authMiddleware = async (req, res, next) => {
     if (!username || !password) {
         return res.status(401).json({ error: 'Authentication failed' })
     }
-    const user = await User.findOne({ username })
+    const user = await User.findOne({ username, password })
     if (!user || user.password !== password) {
         return res.status(401).json({ error: 'Authentication failed' })
     }

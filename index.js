@@ -37,12 +37,14 @@ app.use('/auth', authRoutes)
 app.use('/contacts', contactRoutes)
 
 const init = async () => {
-    mongoose.connect(process.env.DB_URL).then(res => {
+    try {
+        await mongoose.connect(process.env.DB_URL)
         console.log("DB Connected!");
         app.listen(PORT, () => console.log('Listening on ' + PORT))
-    }).catch(error => {
+    } catch (error) {
+
         console.log("\nDatabase connection failed: \n", error)
-    })
+    }
 }
 
 await init()
