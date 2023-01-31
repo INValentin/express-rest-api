@@ -22,7 +22,6 @@ describe('Blogs API', () => {
             .send({ username: "newboy", password: "123" })
             .end((err, res) => {
                 authToken = res.body.token;
-                console.log({ authToken });
                 done();
             });
     });
