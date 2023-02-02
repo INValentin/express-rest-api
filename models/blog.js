@@ -1,4 +1,5 @@
 import { Schema, model } from 'mongoose'
+import { registerSchema } from 'swaggiffy'
 
 const blogSchema = new Schema({
     title: { type: String, required: true },
@@ -9,4 +10,6 @@ const blogSchema = new Schema({
 
 
 const Blog = model('blogs', blogSchema)
+registerSchema('Blog', blogSchema, { orm: 'mongoose' })
+
 export default Blog

@@ -1,11 +1,11 @@
 import express, { json } from 'express';
 
 import mongoose from 'mongoose';
-import swaggerUi from 'swagger-ui-express'
+// import swaggerUi from 'swagger-ui-express'
 import morgan from 'morgan';
-import { Swaggiffy } from 'swaggiffy';
+import { Swaggiffy, registerDefinition } from 'swaggiffy';
 
-import swaggerDocument from './documentation/swagger.json' assert { type: "json" };
+// import swaggerDocument from './documentation/swagger.json' assert { type: "json" };
 
 mongoose.set('strictQuery', false);
 
@@ -26,7 +26,7 @@ config()
 const app = express()
 app.use(json())
 
-app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument))
+// app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument))
 
 if (process.env.NODE_ENV === 'test') {
     app.use(morgan('combined'));
@@ -49,6 +49,11 @@ const init = async () => {
 }
 
 await init()
+
+registerDefinition(blogRoutes, { tags: 'Blogs', mappedSchema: 'Blog', basePath: '/blogs' })
+registerDefinition(userRoutes, { tags: 'Users', mappedSchema: 'User', basePath: '/users' })
+registerDefinition(contactRoutes, { tags: 'Contacts', mappedSchema: 'Contact', basePath: '/contacts' })
+
 
 new Swaggiffy().setupExpress(app).swaggiffy();
 

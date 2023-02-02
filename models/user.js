@@ -1,4 +1,5 @@
 import { Schema, model } from 'mongoose'
+import { registerSchema } from 'swaggiffy';
 
 const userSchema = new Schema(({
     username: { type: String, required: true },
@@ -9,5 +10,7 @@ const userSchema = new Schema(({
 }))
 
 const User = model('User', userSchema)
+
+registerSchema('User', userSchema, { orm: 'mongoose' })
 export default User
 

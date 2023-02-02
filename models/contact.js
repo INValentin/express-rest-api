@@ -1,4 +1,5 @@
 import mongoose from "mongoose";
+import { registerSchema } from "swaggiffy";
 
 const contactSchema = new mongoose.Schema({
     fullName: { type: String, required: true },
@@ -7,4 +8,8 @@ const contactSchema = new mongoose.Schema({
 }, { timestamps: true })
 
 
-export default mongoose.model('blog_contacts', contactSchema)
+
+const Contact = mongoose.model('blog_contacts', contactSchema)
+registerSchema('Contact', contactSchema, {orm: 'mongoose'})
+
+export default Contact
