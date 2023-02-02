@@ -15,6 +15,17 @@ const random = () => (Math.random() * 99999).toString()
 describe('Users API', () => {
     let authToken = '';
 
+    before((done) => {
+        // log in as an admin user to get authentication token
+        chai.request(app)
+            .post('/auth/login')
+            .send({ username: "newboy", password: "123" })
+            .end((err, res) => {
+                authToken = res.body.token;
+                done();
+            });
+    });
+
     describe('GET /users', () => {
         it('should return a list of users', (done) => {
             chai.request(app)
