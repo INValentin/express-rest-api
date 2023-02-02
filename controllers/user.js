@@ -50,7 +50,7 @@ export async function deleteUser(req, res) {
     try {
         const deleted = await User.findByIdAndDelete(req.params.id)
         if (!deleted) return res.status(404).json({ error: 'User not found' })
-        res.json(deleted.username + ' was deleted')
+        res.status(204)
     } catch (error) {
         console.log("Can't delete a user: \n", error);
         res.status(500).json({ error: "Can't delete users" })

@@ -3,6 +3,7 @@ import express, { json } from 'express';
 import mongoose from 'mongoose';
 import swaggerUi from 'swagger-ui-express'
 import morgan from 'morgan';
+import { Swaggiffy } from 'swaggiffy';
 
 import swaggerDocument from './documentation/swagger.json' assert { type: "json" };
 
@@ -49,5 +50,6 @@ const init = async () => {
 
 await init()
 
+new Swaggiffy().setupExpress(app).swaggiffy();
 
 export default app

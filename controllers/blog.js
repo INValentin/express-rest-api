@@ -40,7 +40,7 @@ export async function deleteBlog(req, res) {
         if (req.user?.userType !== 'admin') return res.status(403).json({error: 'Only admin can delete blogs.'})
         const blog = await Blog.findByIdAndDelete(req.params.id)
         if (!blog) return res.status(404).json({error: 'Blog not found'})
-        res.status(204).json({msg: "Deleted blog."})
+        res.status(204)
     } catch (error) {
         res.status(400).json({error: error?.message || "Something went wrong!" })
     }
