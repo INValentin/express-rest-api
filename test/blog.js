@@ -1,5 +1,5 @@
-process.env.NODE_ENV = 'test';
-process.env.PORT = 5017
+// process.env.NODE_ENV = 'test';
+// process.env.PORT = 5017
 
 import chai from 'chai';
 import chaiHttp from 'chai-http';

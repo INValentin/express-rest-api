@@ -4,7 +4,7 @@ import mongoose from 'mongoose';
 // import swaggerUi from 'swagger-ui-express'
 import morgan from 'morgan';
 import { Swaggiffy, registerDefinition } from 'swaggiffy';
-
+import path from 'path'
 // import swaggerDocument from './documentation/swagger.json' assert { type: "json" };
 
 mongoose.set('strictQuery', false);
@@ -39,9 +39,6 @@ app.use('/users', userRoutes)
 app.use('/auth', authRoutes)
 app.use('/contacts', contactRoutes)
 
-app.use('*', (req, res) => {
-    res.sendFile(path.join(__dirname + '/public/index.html'));
-})
 
 const init = async () => {
     try {
@@ -62,5 +59,10 @@ registerDefinition(contactRoutes, { tags: 'Contacts', mappedSchema: 'Contact', b
 
 
 new Swaggiffy().setupExpress(app).swaggiffy();
+
+
+// app.use('*', (req, res) => {
+//     res.sendFile(path.join(process.cwd(), 'public/index.html'));
+// })
 
 export default app
