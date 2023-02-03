@@ -21,7 +21,7 @@ const PORT = process.env.NODE_ENV === 'test' ? 5017 : (
 )
 
 config()
-// console.log(process.env.DB_URL)
+// console.log(process.env.DB_URL
 
 const app = express()
 app.use(json())
@@ -32,10 +32,16 @@ if (process.env.NODE_ENV === 'test') {
     app.use(morgan('combined'));
 }
 
+app.use(express.static("public"));
+
 app.use('/blogs', blogRoutes)
 app.use('/users', userRoutes)
 app.use('/auth', authRoutes)
 app.use('/contacts', contactRoutes)
+
+app.use('*', (req, res) => {
+    res.sendFile(path.join(__dirname + '/public/index.html'));
+})
 
 const init = async () => {
     try {
