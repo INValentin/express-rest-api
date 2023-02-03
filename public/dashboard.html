@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard</title>
+    <link rel="stylesheet" href="./css/style.css">
+    <script type="module" src="https://unpkg.com/ionicons@4.5.10-0/dist/ionicons/ionicons.esm.js"></script>
+</head>
+
+<body>
+    <header>
+        <button id="menu-btn"><ion-icon size="large" name="menu"></ion-icon></button>
+        <nav>
+            <button id="menu-close"> <ion-icon size="large" name="close-circle-outline"></ion-icon></button>
+
+            <ul class="dashnav">
+                <li><a href="./index.html">Home</a></li>
+                <li><a href="./portifolio.html">Portifolio</a></li>
+                <li><a class="active" href="./blog.html">Blog</a></li>
+                <li><a href="./contact.html">Contact</a></li>
+                <li><a href="./about.html">About</a></li>
+            </ul>
+            <ul>
+                <li>
+                    <a href="./login.html" class="nav-btn nav-action">Logout</a>
+                </li>
+            </ul>
+            </ul>
+        </nav>
+    </header>
+    <main style="margin: 0;max-width: initial;">
+        <div class="dashboard">
+            <div class="left">
+                <div class="dashboard-menu">
+                    <div class="top">
+                        <a class="active dash-btn"><ion-icon name="analytics"></ion-icon> Analytics</a>
+                        <a class="dash-btn"><ion-icon name="contacts"></ion-icon> Users
+                        </a>
+                        <a class="dash-btn"><ion-icon name="card"></ion-icon> Revenue</a>
+                        <a class="dash-btn"><ion-icon name="happy"></ion-icon> Engagement</a>
+                        <a class="dash-btn"><ion-icon name="calendar"></ion-icon> Celendar</a>
+                        <a class="dash-btn"><ion-icon name="hammer"></ion-icon> Fixes</a>
+                    </div>
+                    <div class="bottom">
+                        <a class="dark dash-btn"><ion-icon name="settings"></ion-icon> Settings</a>
+                    </div>
+                </div>
+            </div>
+            <div class="right">
+                <a href="./create-blog.html" class="btn blog-link">Create a blog</a>
+                <div class="dash-cards">
+                    <div class="dash-card">
+                        <div class="dash-card-title">Visitors</div>
+                        <div class="dash-card-measure">
+                            <div class="rise">
+                                <ion-icon name="trending-up"></ion-icon>
+                            </div>
+                            <div class="down">
+                                <ion-icon name="trending-down"></ion-icon>
+                            </div>
+                        </div>
+                        <div class="dash-card-content">12,211</div>
+                    </div>
+                    <div class="dash-card">
+                        <div class="dash-card-title">Predictions</div>
+                        <div class="dash-card-measure">
+                            <div class="rise">
+                                <ion-icon name="trending-up"></ion-icon>
+                            </div>
+                            <div class="down">
+                                <ion-icon name="trending-down"></ion-icon>
+                            </div>
+                        </div>
+                        <div class="dash-card-content">112 K</div>
+                    </div>
+                    <div class="dash-card">
+                        <div class="dash-card-title">Active users</div>
+                        <div class="dash-card-measure">
+                            <div class="rise">
+                                <ion-icon name="trending-up"></ion-icon>
+                            </div>
+                            <div class="down">
+                                <ion-icon name="trending-down"></ion-icon>
+                            </div>
+                        </div>
+                        <div class="dash-card-content">2.5 M</div>
+                    </div>
+                </div>
+                <br>
+                <div class="dash-actions">
+                    <div class="dash-action">
+                        <h3 class="dash-header">Analytics.</h3>
+                        <p>Get most out of your data.</p>
+                        <div class="analytics-img">
+                            <img src="./images/analytics.png" alt="Coding">
+                        </div>
+                    </div>
+                    <div class="dash-action">
+                        <h3 class="dash-header">Activity.</h3>
+                        <p>Track down activities.</p>
+                        <div class="analytics-img">
+                            <img src="./images/activity.png" alt="activities">
+                        </div>
+                    </div>
+                    <div class="dash-action">
+                        <h3 class="dash-header">Management.</h3>
+                        <p>Micro-managing everything.</p>
+                        <div class="analytics-img">
+                            <img src="./images/management.png" alt="management">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+    <footer>
+        <span>&copy; ISHIMWE, 2022</span>
+    </footer>
+    <!-- <script src="https://unpkg.com/ionicons@4.5.10-0/dist/ionicons.js"></script> -->
+    <script src="./js/menu.js"></script>
+</body>
+
+</html>
