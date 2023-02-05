@@ -17,7 +17,7 @@ import contactRoutes from './routes/contact'
 
 
 const PORT = process.env.NODE_ENV === 'test' ? 5017 : (
-    process.env.PORT || 8000
+    process.env.PORT || 5000
 )
 
 config()
