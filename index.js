@@ -17,7 +17,7 @@ import contactRoutes from './routes/contact'
 
 
 const PORT = process.env.NODE_ENV === 'test' ? 5017 : (
-    process.env.PORT || 5000
+    process.env.PORT || 8000
 )
 
 config()
@@ -44,21 +44,23 @@ const init = async () => {
     try {
         await mongoose.connect(process.env.DB_URL)
         console.log("DB Connected!");
-        app.listen(PORT, () => console.log('Listening on ' + PORT))
+        app.listen(PORT, () => {
+            console.log('Listening on ' + PORT)
+        
+            registerDefinition(blogRoutes, { tags: 'Blogs', mappedSchema: 'Blog', basePath: '/blogs' })
+            registerDefinition(userRoutes, { tags: 'Users', mappedSchema: 'User', basePath: '/users' })
+            registerDefinition(contactRoutes, { tags: 'Contacts', mappedSchema: 'Contact', basePath: '/contacts' })
+            new Swaggiffy().setupExpress(app).setupPort(PORT).swaggiffy();
+        })
+        
     } catch (error) {
-
+        
         console.log("\nDatabase connection failed: \n", error)
     }
 }
 
 await init()
 
-registerDefinition(blogRoutes, { tags: 'Blogs', mappedSchema: 'Blog', basePath: '/blogs' })
-registerDefinition(userRoutes, { tags: 'Users', mappedSchema: 'User', basePath: '/users' })
-registerDefinition(contactRoutes, { tags: 'Contacts', mappedSchema: 'Contact', basePath: '/contacts' })
-
-
-new Swaggiffy().setupExpress(app).swaggiffy();
 
 
 // app.use('*', (req, res) => {
