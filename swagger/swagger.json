@@ -1044,11 +1044,11 @@
           },
           "createdAt": {
             "type": "string",
-            "example": "2/6/2023, 12:33:02 AM"
+            "example": "2/6/2023, 12:38:50 AM"
           },
           "updatedAt": {
             "type": "string",
-            "example": "2/6/2023, 12:33:02 AM"
+            "example": "2/6/2023, 12:38:50 AM"
           },
           "__v": {
             "type": "number",
@@ -1078,11 +1078,11 @@
           },
           "createdAt": {
             "type": "string",
-            "example": "2/6/2023, 12:33:02 AM"
+            "example": "2/6/2023, 12:38:50 AM"
           },
           "updatedAt": {
             "type": "string",
-            "example": "2/6/2023, 12:33:02 AM"
+            "example": "2/6/2023, 12:38:50 AM"
           },
           "__v": {
             "type": "number",
