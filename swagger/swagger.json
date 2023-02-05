@@ -29,6 +29,112 @@
       }
     },
     "paths": {
+      "/blogs/{id}/comments/{commentId}": {
+        "put": {
+          "tags": [
+            "Blogs"
+          ],
+          "summary": "",
+          "description": "",
+          "parameters": [
+            {
+              "in": "path",
+              "name": "id",
+              "required": true,
+              "type": "string"
+            },
+            {
+              "in": "path",
+              "name": "commentId",
+              "required": true,
+              "type": "string"
+            },
+            {
+              "in": "body",
+              "name": "body",
+              "required": false,
+              "schema": {
+                "$ref": "#/definitions/Blog"
+              }
+            }
+          ],
+          "consumes": [
+            "application/json"
+          ],
+          "produces": [
+            "application/json"
+          ],
+          "responses": {
+            "201": {
+              "description": "Created",
+              "schema": {
+                "$ref": "#/definitions/Blog"
+              }
+            },
+            "500": {
+              "description": "Internal Server Error"
+            }
+          },
+          "security": [
+            {
+              "Bearer": [
+                "global"
+              ]
+            }
+          ]
+        },
+        "delete": {
+          "tags": [
+            "Blogs"
+          ],
+          "summary": "",
+          "description": "",
+          "parameters": [
+            {
+              "in": "path",
+              "name": "id",
+              "required": true,
+              "type": "string"
+            },
+            {
+              "in": "path",
+              "name": "commentId",
+              "required": true,
+              "type": "string"
+            }
+          ],
+          "consumes": [
+            "application/json"
+          ],
+          "produces": [
+            "application/json"
+          ],
+          "responses": {
+            "200": {
+              "description": "OK",
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "deleted": {
+                    "type": "boolean",
+                    "example": true
+                  }
+                }
+              }
+            },
+            "500": {
+              "description": "Internal Server Error"
+            }
+          },
+          "security": [
+            {
+              "Bearer": [
+                "global"
+              ]
+            }
+          ]
+        }
+      },
       "/blogs": {
         "get": {
           "tags": [
@@ -262,6 +368,106 @@
         }
       },
       "/blogs/{id}/comments": {
+        "get": {
+          "tags": [
+            "Blogs"
+          ],
+          "summary": "",
+          "description": "",
+          "parameters": [
+            {
+              "in": "path",
+              "name": "id",
+              "required": true,
+              "type": "string"
+            }
+          ],
+          "consumes": [
+            "application/json"
+          ],
+          "produces": [
+            "application/json"
+          ],
+          "responses": {
+            "200": {
+              "description": "OK",
+              "schema": {
+                "type": "array",
+                "items": {
+                  "$ref": "#/definitions/Blog"
+                }
+              }
+            },
+            "500": {
+              "description": "Internal Server Error",
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "error": {
+                    "type": "string",
+                    "example": "Internal Server Error"
+                  }
+                }
+              }
+            }
+          },
+          "security": [
+            {
+              "Bearer": [
+                "global"
+              ]
+            }
+          ]
+        },
+        "post": {
+          "tags": [
+            "Blogs"
+          ],
+          "summary": "",
+          "description": "",
+          "parameters": [
+            {
+              "in": "path",
+              "name": "id",
+              "required": true,
+              "type": "string"
+            },
+            {
+              "in": "body",
+              "name": "body",
+              "required": true,
+              "schema": {
+                "$ref": "#/definitions/Blog"
+              }
+            }
+          ],
+          "consumes": [
+            "application/json"
+          ],
+          "produces": [
+            "application/json"
+          ],
+          "responses": {
+            "201": {
+              "description": "Created",
+              "schema": {
+                "$ref": "#/definitions/Blog"
+              }
+            },
+            "500": {
+              "description": "Internal Server Error"
+            }
+          },
+          "security": [
+            {
+              "Bearer": [
+                "global"
+              ]
+            }
+          ]
+        }
+      },
+      "/blogs/{id}/like": {
         "post": {
           "tags": [
             "Blogs"
@@ -776,43 +982,6 @@
       }
     },
     "definitions": {
-      "Blog": {
-        "type": "object",
-        "properties": {
-          "title": {
-            "type": "string",
-            "example": "string"
-          },
-          "content": {
-            "type": "string",
-            "example": "string"
-          },
-          "author": {
-            "type": "string",
-            "example": "string"
-          },
-          "comments": {
-            "type": "array"
-          },
-          "_id": {
-            "type": "string",
-            "example": "507f1f77bcf86cd799439011",
-            "required": true
-          },
-          "createdAt": {
-            "type": "string",
-            "example": "2/3/2023, 8:21:51 PM"
-          },
-          "updatedAt": {
-            "type": "string",
-            "example": "2/3/2023, 8:21:51 PM"
-          },
-          "__v": {
-            "type": "number",
-            "example": 0
-          }
-        }
-      },
       "User": {
         "type": "object",
         "properties": {
@@ -847,6 +1016,46 @@
           }
         }
       },
+      "Blog": {
+        "type": "object",
+        "properties": {
+          "title": {
+            "type": "string",
+            "example": "string"
+          },
+          "content": {
+            "type": "string",
+            "example": "string"
+          },
+          "author": {
+            "type": "string",
+            "example": "string"
+          },
+          "likes": {
+            "type": "array"
+          },
+          "comments": {
+            "type": "array"
+          },
+          "_id": {
+            "type": "string",
+            "example": "507f1f77bcf86cd799439011",
+            "required": true
+          },
+          "createdAt": {
+            "type": "string",
+            "example": "2/6/2023, 12:33:02 AM"
+          },
+          "updatedAt": {
+            "type": "string",
+            "example": "2/6/2023, 12:33:02 AM"
+          },
+          "__v": {
+            "type": "number",
+            "example": 0
+          }
+        }
+      },
       "Contact": {
         "type": "object",
         "properties": {
@@ -869,11 +1078,11 @@
           },
           "createdAt": {
             "type": "string",
-            "example": "2/3/2023, 8:21:51 PM"
+            "example": "2/6/2023, 12:33:02 AM"
           },
           "updatedAt": {
             "type": "string",
-            "example": "2/3/2023, 8:21:51 PM"
+            "example": "2/6/2023, 12:33:02 AM"
           },
           "__v": {
             "type": "number",

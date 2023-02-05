@@ -21,4 +21,13 @@ const authMiddleware = async (req, res, next) => {
     next()
 }
 
+export async function isAdmin(req, res, next) {
+    if (req.isAdmin === true) return next()
+    if (req.user) {
+        return res.status(403).json({error: 'Access denied. Admin only action.'})
+    }
+    
+    return res.status(401).json({error: 'You\'re not authenticated!'})
+}
+
 export default authMiddleware

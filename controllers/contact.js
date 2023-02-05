@@ -46,7 +46,7 @@ export async function deleteContact(req, res) {
     try {
         const deleted = await Contact.findByIdAndDelete(req.params.id)
         if (!deleted) return res.status(404).json({ error: 'Contact not found' })
-        res.json(deleted.fullName + ' was deleted')
+        res.status(204).json()
     } catch (error) {
         console.log("Can't delete a contact: \n", error);
         res.status(500).json({ error: "Can't delete contacts" })

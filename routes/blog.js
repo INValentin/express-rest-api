@@ -1,24 +1,26 @@
 import { Router } from 'express'
 import Blog from '../models/blog'
-import authMiddleware from '../middleware/auth'
+import authMiddleware, {isAdmin } from '../middleware/auth'
 
-import { createBlog, updateBlog, getBlog, getBlogs, createBlogComment, getBlogComments, deleteBlog } from '../controllers/blog'
+import { createBlog, updateBlog, getBlog, getBlogs, createBlogComment, getBlogComments, deleteBlog, deleteBlogComment, updateBlogComment, likeBlog } from '../controllers/blog'
 const router = Router()
 
+router.put('/:id/comments/:commentId', authMiddleware, updateBlogComment)
+router.delete('/:id/comments/:commentId', authMiddleware, deleteBlogComment)
 router.get('/', getBlogs)
 
-router.post('/', createBlog)
+router.post('/', authMiddleware, isAdmin,  createBlog)
+
+
+
+
+
 
 
 router.get('/:id', getBlog)
-
-router.put('/:id', authMiddleware, updateBlog)
-
-
-router.delete('/:id', authMiddleware, deleteBlog)
-
 router.get('/:id/comments', getBlogComments)
-
-router.post('/:id/comments/', createBlogComment)
-
+router.post('/:id/comments', authMiddleware, createBlogComment)
+router.put('/:id', authMiddleware, isAdmin, updateBlog)
+router.delete('/:id', authMiddleware, isAdmin, deleteBlog)
+router.post("/:id/like", authMiddleware, likeBlog)
 export default router

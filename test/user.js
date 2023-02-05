@@ -60,11 +60,26 @@ describe('Users API', () => {
         });
     });
 
+    describe('GET /users/:id', () => {
+        it('should GET a single user', async () => {
+            const existingUser = await User.findOne();
+            chai.request(app)
+                .get(`/users/${existingUser._id.toString()}`)
+                .end((err, res) => {
+                    expect(res).to.have.status(200);
+                    expect(res.body).to.be.an('object');
+                    expect(res.body.fullName).to.equal(existingUser.fullName);
+                    expect(res.body.username).to.equal(existingUser.username);
+                    // done();
+                });
+        });
+    });
+
     describe('PUT /users/:id', () => {
         it('should update a user', async () => {
 
             const existingUser = await User.findOne();
-            const updatedUser = { fullName: existingUser.fullName + '_' + random()}
+            const updatedUser = { fullName: existingUser.fullName + '_' + random() }
 
             chai.request(app)
                 .put(`/users/${existingUser._id.toString()}`)
