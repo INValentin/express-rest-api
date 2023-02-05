@@ -18,7 +18,8 @@
     },
     "basePath": "/",
     "schemes": [
-      "http"
+      "http",
+      "https"
     ],
     "securityDefinitions": {
       "Bearer": {
