@@ -18,8 +18,8 @@
     },
     "basePath": "/",
     "schemes": [
-      "http",
-      "https"
+      "https",
+      "http"
     ],
     "securityDefinitions": {
       "Bearer": {
@@ -1040,11 +1040,11 @@
           },
           "createdAt": {
             "type": "string",
-            "example": "2/6/2023, 1:39:02 PM"
+            "example": "2/6/2023, 1:44:33 PM"
           },
           "updatedAt": {
             "type": "string",
-            "example": "2/6/2023, 1:39:02 PM"
+            "example": "2/6/2023, 1:44:33 PM"
           },
           "__v": {
             "type": "number",
@@ -1074,11 +1074,11 @@
           },
           "createdAt": {
             "type": "string",
-            "example": "2/6/2023, 1:39:02 PM"
+            "example": "2/6/2023, 1:44:33 PM"
           },
           "updatedAt": {
             "type": "string",
-            "example": "2/6/2023, 1:39:02 PM"
+            "example": "2/6/2023, 1:44:33 PM"
           },
           "__v": {
             "type": "number",
