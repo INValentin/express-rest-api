@@ -1,7 +1,7 @@
 import Blog from '../models/blog.js'
 
 export async function getBlogs(req, res) {
-    const blogs = await Blog.find()
+    const blogs = await Blog.find().sort({ _id: -1 }).limit(15)
     res.json(blogs)
 }
 
@@ -39,7 +39,7 @@ export async function deleteBlog(req, res) {
     try {
         const blog = await Blog.findByIdAndDelete(req.params.id)
         if (!blog) return res.status(404).json({ error: 'Blog not found' })
-        res.status(204).json()
+        res.status(204).json('')
     } catch (error) {
         res.status(400).json({ error: error?.message || "Something went wrong!" })
     }
@@ -59,7 +59,7 @@ export async function getBlogComments(req, res) {
 
 export async function createBlogComment(req, res) {
     const { user, comment } = req.body
-
+    console.log(req.body);
     if (!comment) return res.status(400).json({ error: "comment is required" })
 
     const blog = await Blog.findById(req.params.id)
@@ -95,7 +95,7 @@ export async function deleteBlogComment(req, res) {
     blog.comments.splice(cmtIdx, 1)
 
     await blog.save()
-    res.status(204).json()
+    res.status(204).json('')
 }
 
 export async function likeBlog(req, res) {

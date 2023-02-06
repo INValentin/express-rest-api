@@ -5,17 +5,27 @@ if (localStorage.getItem(storeKey) === null) {
 }
 
 /**@type {Array} */
-let blogs = JSON.parse(localStorage.getItem(storeKey))
-
+let blogs = []
 
 const blogListEl = document.querySelector(".blog-list")
 /**@type {HTMLTemplateElement} */
 const blogTemp = document.getElementById("blog-template")
+blogListEl.innerHTML = "<span class='loader'></span>"
 
-// show blogs if any
-showBlogs()
 
-function showBlogs() {
+API.request(API.blogs.list, (blogs => {
+    // show blogs if any
+    blogs = blogs.slice(0, 10)
+    console.log(blogs);
+    if (blogs) {
+
+        showBlogs(blogs)
+    }
+}), (error) => {
+    console.error({ error });
+})
+
+function showBlogs(blogs) {
     blogListEl.innerHTML = `<h3>All blogs.</h3>`
 
     if (blogs.length === 0) {
@@ -23,19 +33,23 @@ function showBlogs() {
         return
     }
 
-    blogs.reverse().forEach((blog, i) => {
+    blogs.forEach((blog, i) => {
+        console.log(blogs)
         let blogEl = blogTemp.content.firstElementChild.cloneNode(true)
-        blogEl.querySelector(".blog-name").innerHTML = blog.names
-        blogEl.querySelector(".blog-email").innerHTML = blog.email
-        blogEl.querySelector(".blog-message").innerHTML = blog.message.slice(0, 100)
-        blogEl.querySelector(".blog-like .blog-count").innerHTML = blog.likes ?? 0
-        blogEl.querySelector(".blog-comment .blog-count").innerHTML = blog.comments?.length ?? 0
-        blogEl.querySelector(".blog-readmore").href += blog.id
-        //blogEl.querySelector(".blog-readmore-admin").href += blog.id
-        blogEl.querySelector(".blog-like").addEventListener("click", e => {
-            blogs[i].likes = (blogs[i].likes ?? 0) + 1
-            localStorage.setItem(storeKey, JSON.stringify(blogs))
-            showBlogs()
+        blogEl.querySelector(".blog-name").innerHTML = blog.title
+        blogEl.querySelector(".blog-email").innerHTML = ''
+        blogEl.querySelector(".blog-message").innerHTML = blog.content
+        blogEl.querySelector(".blog-like .blog-count").innerHTML = blog.likes.length
+        blogEl.querySelector(".blog-comment .blog-count").innerHTML = blog.comments.length
+        blogEl.querySelector(".blog-readmore").href += blog._id
+        blogEl.querySelector(".blog-like").addEventListener("click", async e => {
+            API.request(() => API.blogs.likeAblog(blog._id),
+                result => {
+                    console.log("Liked a blog", { result });
+                    blogEl.querySelector(".blog-like .blog-count").innerHTML =result?.likes ?? blog.likes.length + 1
+                },
+                error => console.error("Can't like a blog", { error })
+            )
         })
 
         blogEl.querySelector(".blog-comment").addEventListener("click", e => {
@@ -45,7 +59,6 @@ function showBlogs() {
         blogListEl.appendChild(blogEl)
     })
 }
-
 
 
 

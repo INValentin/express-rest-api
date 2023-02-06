@@ -4,8 +4,8 @@ import mongoose from 'mongoose';
 // import swaggerUi from 'swagger-ui-express'
 import morgan from 'morgan';
 import { Swaggiffy, registerDefinition } from 'swaggiffy';
-import path from 'path'
 // import swaggerDocument from './documentation/swagger.json' assert { type: "json" };
+import cors from 'cors'
 
 mongoose.set('strictQuery', false);
 
@@ -24,6 +24,7 @@ config()
 // console.log(process.env.DB_URL
 
 const app = express()
+app.use(cors())
 app.use(json())
 
 // app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument))

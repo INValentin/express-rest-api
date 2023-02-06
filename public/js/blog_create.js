@@ -5,8 +5,7 @@ if (localStorage.getItem(storeKey) === null) {
 }
 
 /**@type {Array} */
-let blogs = JSON.parse(localStorage.getItem(storeKey))
-
+let blogs = []
 
 const blogListEl = document.querySelector(".blog-list")
 /**@type {HTMLTemplateElement} */
@@ -25,55 +24,107 @@ form.addEventListener("submit", e => {
 })
 
 
-// show blogs if any
-showBlogs()
+const init = async () => {
+    blogListEl.innerHTML = `<span class="loader"></span>`
+    API.request(API.blogs.list, (blogs => {
+        // show blogs if any
+        blogs = blogs.slice(0, 10)
+        showBlogs(blogs)
+    }), (error) => {
+        console.error({ error });
+    })
+}
+init()
 
-function addBlog() {
-    const names = nameInput.value
-    const email = emailInput.value
-    const message = messageInput.value
 
-    if ([names, email, message].some(value => value.trim() === "")) {
+async function addBlog() {
+    const title = nameInput.value
+    const content = messageInput.value
+
+    if ([title, content].some(value => value.trim() === "")) {
         return alert("Please fill all the fields!")
     }
 
     const id = Date.now()
-    const blog = { id, names, email, message }
+    const blog = { title, content }
 
-    blogs.push(blog)
     form.reset()
-    localStorage.setItem(storeKey, JSON.stringify(blogs))
-    alert("Saved!")
-    showBlogs()
+    API.request(() => API.blogs.create(JSON.stringify(blog)),
+        async blog => {
+            await init()
+            console.log("Blog created", { blog })
+        },
+        error => console.error("Blog create failed", { error })
+    )
 }
 
 
-function showBlogs() {
-    blogListEl.innerHTML = `<h3>Mange blogs.</h3>`
+
+function showBlogs(blogs) {
+    blogListEl.innerHTML = `<h3>All blogs.</h3>`
 
     if (blogs.length === 0) {
         blogListEl.innerHTML += `<h3 style="color: var(--secondary)">No Blogs yet.</h3>`
         return
     }
 
-
-    blogs.reverse().forEach((blog, i) => {
+    blogs.forEach((blog, i) => {
+        console.log(blogs)
         let blogEl = blogTemp.content.firstElementChild.cloneNode(true)
-        blogEl.querySelector(".blog-name").innerHTML = blog.names
-        blogEl.querySelector(".blog-email").innerHTML = blog.email
-        blogEl.querySelector(".blog-message").innerHTML = blog.message.slice(0, 100)
-        blogEl.querySelector(".blog-readmore").href += blog.id
+        blogEl.querySelector(".blog-name").innerHTML = blog.title
+        blogEl.querySelector(".blog-email").innerHTML = ''
+        blogEl.querySelector(".blog-message").innerHTML = blog.content
+        // blogEl.querySelector(".blog-comment .blog-count").innerHTML = blog.comments.length
+        blogEl.querySelector(".blog-readmore").href += blog._id
+        // blogEl.querySelector(".blog-like").addEventListener("click", e => {
+        //     // TODO: LIKE
+        // })
         blogEl.querySelector(".blog-remove").addEventListener("click", e => {
             if (window.confirm("Confirm Delete?")) {
-                blogs.splice(i, 1)
-                localStorage.setItem(storeKey, JSON.stringify(blogs))
-                showBlogs()
+                blogEl.remove()
+                API.request(() => API.blogs.delete(blog._id),
+                    () => {
+                        console.log("Blog deleted");
+                    },
+                    error => console.error("Blog not deleted", { error })
+                )
             }
         })
+
+        // blogEl.querySelector(".blog-comment").addEventListener("click", e => {
+        //     blogEl.querySelector(".blog-readmore").click()
+        // })
 
         blogListEl.appendChild(blogEl)
     })
 }
+
+// function showBlogs() {
+//     blogListEl.innerHTML = `<h3>Mange blogs.</h3>`
+
+//     if (blogs.length === 0) {
+//         blogListEl.innerHTML += `<h3 style="color: var(--secondary)">No Blogs yet.</h3>`
+//         return
+//     }
+
+
+//     blogs.forEach((blog, i) => {
+//         let blogEl = blogTemp.content.firstElementChild.cloneNode(true)
+//         blogEl.querySelector(".blog-name").innerHTML = blog.names
+//         blogEl.querySelector(".blog-email").innerHTML = blog.email
+//         blogEl.querySelector(".blog-message").innerHTML = blog.message.slice(0, 100)
+//         blogEl.querySelector(".blog-readmore").href += blog.id
+//         blogEl.querySelector(".blog-remove").addEventListener("click", e => {
+//             if (window.confirm("Confirm Delete?")) {
+//                 blogs.splice(i, 1)
+//                 localStorage.setItem(storeKey, JSON.stringify(blogs))
+//                 showBlogs()
+//             }
+//         })
+
+//         blogListEl.appendChild(blogEl)
+//     })
+// }
 
 
 

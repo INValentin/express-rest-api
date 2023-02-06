@@ -106,6 +106,22 @@ nav li a.nav-btn {
     border: 2px solid transparent;
     transition: .2s;
 }
+.link {
+    color: var(--primary);
+    text-decoration: underline;
+    padding: .5rem;
+}
+
+.loader {
+    border-color: #027A00;
+    border: 2px solid;
+    border-bottom-color: transparent;
+    border-radius: 50%;
+    width: 40px;
+    height: 40px;
+    margin: 3rem auto;
+    animation:  spin 2s infinite;
+}
 
 nav li a.nav-btn.nav-action {
     background-color: var(--primary);
@@ -492,9 +508,10 @@ form.login a.btn {
     gap: 1rem;
     border-radius: 10px;
     padding: 1rem;
-    margin: 1rem .5rem .5rem;
+    margin: 1rem auto .5rem;
     color: var(--black-ish);
     min-width: 300px;
+    max-width: 700px;
 }
 
 .blog-btn {
@@ -511,7 +528,7 @@ form.login a.btn {
 form.comment-form {
     width: initial;
     max-width: 500px;
-    margin-top: 1rem;
+    margin-top: .25rem;
     box-shadow: none;
 }
 
@@ -561,6 +578,7 @@ section.blog-section {
     flex-direction: column;
     gap: 1rem;
     width: 100%;
+    max-width: 800px;
     flex-wrap: wrap;
 }
 
@@ -904,3 +922,14 @@ button.article-remove.blog-remove {
         max-width: 100%;
     }
 }
+
+@keyframes spin {
+    from {
+        transform: rotate(0);
+    } to {
+        transform: rotate(360deg);
+    }
+}
+
+
+

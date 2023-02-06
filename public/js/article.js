@@ -1,103 +1,104 @@
-const articleTitle = document.querySelector(".article-title")
-const articleBody = document.querySelector(".article-message")
-const articleDelete = document.querySelector(".article-remove")
-const articleAuthor = document.querySelector(".article-author")
+window.addEventListener("DOMContentLoaded", async e => {
 
-/**@type {HTMLTemplateElement} */
-const commentTemp = document.getElementById("comment-temp")
+    const articleTitle = document.querySelector(".article-title")
+    const articleBody = document.querySelector(".article-message")
+    const articleDelete = document.querySelector(".article-remove")
+    const articleAuthor = document.querySelector(".article-author")
 
-const commentForm = document.querySelector(".comment-form")
-const commentAuthor = document.querySelector("#comment-author")
-const commentMessage = document.querySelector("#comment-message")
-const commentList = document.querySelector(".comment-list")
+    /**@type {HTMLTemplateElement} */
+    const commentTemp = document.getElementById("comment-temp")
 
-
-const articleId = new URLSearchParams(location.search.replace("?", "")).get("id")
-
-/**@type {Array} */
-let blogs = JSON.parse(localStorage.getItem("blogs"))
-
-let article = blogs.find(blog => Number(blog.id) === Number(articleId))
-
-getComments()
-
-if (!article) {
-    window.alert("Article not found")
-    window.location.href = "./blog.html"
-}
-
-if (articleDelete) {
-
-    articleDelete.addEventListener("click", e => {
-        if (window.confirm("Confirm Delete?")) {
-            localStorage.setItem("blogs", JSON.stringify(
-                blogs.filter(blog => Number(blog.id) !== Number(articleId))
-            ))
-
-            blogs = JSON.parse(localStorage.getItem("blogs"))
-
-            window.location.href = "./blog.html"
-        }
-    })
-
-}
-
-commentForm.addEventListener("submit", e => {
-    e.preventDefault()
-    const author = commentAuthor.value
-    const message = commentMessage.value
-
-    if (author === "" || message === "") {
-        return alert("Author, and comment are required!")
-    }
-    const comment = { author, message, date: (new Date).toLocaleString() }
-    // console.log({comment})
-    const blogIndex = blogs.findIndex(b => b.id === article.id)
-    blogs[blogIndex].comments = [...(blogs[blogIndex].comments ?? []), comment]
-    localStorage.setItem("blogs", JSON.stringify(blogs))
-    commentForm.reset()
-    getComments()
-})
+    const commentForm = document.querySelector(".comment-form")
+    const commentAuthor = document.querySelector("#comment-author")
+    const commentMessage = document.querySelector("#comment-message")
+    const commentList = document.querySelector(".comment-list")
 
 
-articleTitle.innerHTML = article.names
-articleAuthor.innerHTML = article.email
-articleBody.innerHTML = article.message
+    const articleId = new URLSearchParams(location.search.replace("?", "")).get("id")
 
-function getComments() {
     /**@type {Array} */
-    console.log(articleId)
-    let comments = blogs.find(blog => blog.id === article.id)?.comments || []
-    commentList.innerHTML = ""
+    let blogs = JSON.parse(localStorage.getItem("blogs"))
 
-    if (comments.length === 0) {
-        commentList.innerHTML = `<h4>No comments yet.</h4>`
+    let article = await (await API.blogs.get(articleId)).json()
+    console.log({article});
+    
+    if (!article) {
+        window.alert("Article not found")
+        window.location.href = "./blog.html"
+    }
+    getComments()
 
-        return
+    if (articleDelete) {
+
+        articleDelete.addEventListener("click", async e => {
+            if (window.confirm("Confirm Delete?")) {
+                API.request(() => API.blogs.delete(articleId), () => {
+                    console.log("blog deleted");
+                    window.location.href = "./blog.html"
+                }, (error) => console.error("Delete blog", { error }))
+            }
+        })
+
     }
 
-    comments.reverse().forEach((comment, idx) => {
-        let commentEl = commentTemp.content.firstElementChild.cloneNode(true)
+    commentForm.addEventListener("submit", async e => {
+        e.preventDefault()
+        const message = commentMessage.value
 
-        commentEl.querySelector(".comment-author-name").innerHTML = comment.author
-        commentEl.querySelector(".comment-date").innerHTML = comment.date
-        commentEl.querySelector(".comment-message").innerHTML = comment.message
-        const commentDelete = commentEl.querySelector(".comment-delete")
-        if (commentDelete) {
-            commentDelete.addEventListener("click", e => {
-                if (confirm("Confirm delete comment?")) {
-                    comments.splice(idx, 1)
-                    let blogIdx = blogs.findIndex(blg => blg.id === article.id)
-                    blogs[blogIdx].comments = comments
-                    localStorage.setItem('blogs', JSON.stringify(blogs))
-                    getComments()
-                }
-
-            })
+        if (message.trim() === "") {
+            return alert("Comment is required!")
         }
-        commentList.appendChild(commentEl)
+        const comment = { comment: message }
+        // console.log({comment})
+        commentForm.reset()
+        API.request(
+            () => API.blogs.commentToAblog(articleId, JSON.stringify(comment)),
+            (cmt) => {
+                console.log("comment created", { cmt })
+                getComments()
+            },
+            error => console.error("comment create failed", { error })
+        )
     })
 
 
-}
+    articleTitle.innerHTML = article.title
+    articleBody.innerHTML = article.content
 
+    async function getComments() {
+        /**@type {Array} */
+        let comments = await (await API.blogs.getBlogComments(articleId)).json() || article.comments
+        commentList.innerHTML = ""
+
+        if (comments.length === 0) {
+            commentList.innerHTML = `<h4>No comments yet.</h4>`
+
+            return
+        }
+
+        comments.reverse().forEach((comment) => {
+            let commentEl = commentTemp.content.firstElementChild.cloneNode(true)
+
+            commentEl.querySelector(".comment-author-name").innerHTML = "comment"
+            commentEl.querySelector(".comment-date").innerHTML = comment.user
+            commentEl.querySelector(".comment-message").innerHTML = comment.comment
+            const commentDelete = commentEl.querySelector(".comment-delete")
+            if (commentDelete) {
+                commentDelete.addEventListener("click", async e => {
+                    if (confirm("Confirm delete comment?")) {
+                        commentEl.remove();
+                        API.request(() => API.blogs.commentToAblog(articleId), () => {
+                            console.log("comment deleted");
+                        }, error => console.error("Comment delete failed", { error }))
+                    }
+
+                })
+            }
+            commentList.appendChild(commentEl)
+        })
+
+
+    }
+
+
+})

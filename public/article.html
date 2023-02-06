@@ -8,6 +8,7 @@
     <title>Article</title>
     <link rel="stylesheet" href="./css/style.css">
     <script type="module" src="https://unpkg.com/ionicons@4.5.10-0/dist/ionicons/ionicons.esm.js"></script>
+    <script src="./js/API.js"></script>
 </head>
 
 <body>
@@ -15,7 +16,6 @@
         <button id="menu-btn"><ion-icon size="large" name="menu"></ion-icon></button>
         <nav>
             <button id="menu-close"> <ion-icon size="large" name="close-circle-outline"></ion-icon></button>
-
             <ul>
                 <li><a href="./index.html">Home</a></li>
                 <li><a href="./portifolio.html">Portifolio</a></li>
@@ -36,25 +36,24 @@
     <main style="margin: 0; max-width: initial;">
         <article class="article">
             <h1 class="article-title"> Article Title</h1>
-            <div>
-                by <strong class="article-author">Author</strong>
-            </div>
             <div class="right">
                 <div class="article-message">
                     Lorem, ipsum dolor sit amet consectetur adipisicing elit. Sunt, quas cupiditate error, distinctio
                     dolorem reiciendis consequatur praesentium molestiae debitis veniam rerum deleniti impedit quidem
                     quia! Iste porro quam qui excepturi!
                 </div>
-                <form action="" class="comment-form">
-                    <h3>Add comment</h3>
-                    <input type="text" placeholder="Your name" id="comment-author">
+                <hr style="margin: 30px 20px 10px; max-width: 300px;">
+                <form style="padding: 0;" action="" class="comment-form">
+                    <h3 style=" margin:5px 30px 0; font-size: small;">Add comment</h3>
+                    <input type="text" style="display: none;" placeholder="Your name" id="comment-author">
                     <textarea id="comment-message" placeholder="Comment here.."></textarea>
                     <button class="btn">Comment</button>
                 </form>
-                <div class="comment-list">
+                <div style="padding: 2px 5px;" class="comment-list">
                     <template id="comment-temp">
                         <div class="comment">
-                            <div class="comment-author"><span class="comment-author-name">Valentin</span> - <span class="comment-date">january 12, 2030</span>
+                            <div class="comment-author"><span class="comment-author-name">Valentin</span> - <span
+                                    class="comment-date">january 12, 2030</span>
                             </div>
                             <div class="comment-message">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Nemo
                                 officia dicta doloribus illum maiores, dolor rem? Aliquid facilis doloremque nisi?</div>
