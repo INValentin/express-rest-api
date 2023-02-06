@@ -41,7 +41,6 @@ describe('Blogs API', () => {
     describe('POST /blogs', () => {
         it('should create a new blog', (done) => {
             const blog = {
-                author: 'John Doe',
                 title: 'Test Blog',
                 content: 'This is a test blog'
             };
@@ -53,7 +52,6 @@ describe('Blogs API', () => {
                 .end((err, res) => {
                     expect(res).to.have.status(201);
                     expect(res.body).to.be.an('object');
-                    expect(res.body.author).to.equal(blog.author);
                     expect(res.body.title).to.equal(blog.title);
                     expect(res.body.content).to.equal(blog.content);
                     done();

@@ -1027,10 +1027,6 @@
             "type": "string",
             "example": "string"
           },
-          "author": {
-            "type": "string",
-            "example": "string"
-          },
           "likes": {
             "type": "array"
           },
@@ -1044,11 +1040,11 @@
           },
           "createdAt": {
             "type": "string",
-            "example": "2/6/2023, 1:23:09 AM"
+            "example": "2/6/2023, 1:39:02 PM"
           },
           "updatedAt": {
             "type": "string",
-            "example": "2/6/2023, 1:23:09 AM"
+            "example": "2/6/2023, 1:39:02 PM"
           },
           "__v": {
             "type": "number",
@@ -1078,11 +1074,11 @@
           },
           "createdAt": {
             "type": "string",
-            "example": "2/6/2023, 1:23:09 AM"
+            "example": "2/6/2023, 1:39:02 PM"
           },
           "updatedAt": {
             "type": "string",
-            "example": "2/6/2023, 1:23:09 AM"
+            "example": "2/6/2023, 1:39:02 PM"
           },
           "__v": {
             "type": "number",
