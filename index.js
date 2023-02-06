@@ -47,6 +47,7 @@ const init = async () => {
         app.listen(PORT, () => {
             console.log('Listening on ' + PORT)
         
+            registerDefinition(authRoutes, { tags: 'Auth', mappedSchema: 'Auth', basePath: '/auth' })
             registerDefinition(blogRoutes, { tags: 'Blogs', mappedSchema: 'Blog', basePath: '/blogs' })
             registerDefinition(userRoutes, { tags: 'Users', mappedSchema: 'User', basePath: '/users' })
             registerDefinition(contactRoutes, { tags: 'Contacts', mappedSchema: 'Contact', basePath: '/contacts' })

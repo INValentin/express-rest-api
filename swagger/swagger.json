@@ -29,6 +29,49 @@
       }
     },
     "paths": {
+      "/auth/login": {
+        "post": {
+          "tags": [
+            "Auth"
+          ],
+          "summary": "",
+          "description": "",
+          "parameters": [
+            {
+              "in": "body",
+              "name": "body",
+              "required": true,
+              "schema": {
+                "$ref": "#/definitions/Auth"
+              }
+            }
+          ],
+          "consumes": [
+            "application/json"
+          ],
+          "produces": [
+            "application/json"
+          ],
+          "responses": {
+            "201": {
+              "description": "Created",
+              "schema": {
+                "$ref": "#/definitions/Auth"
+              }
+            },
+            "500": {
+              "description": "Internal Server Error"
+            }
+          },
+          "security": [
+            {
+              "Bearer": [
+                "global"
+              ]
+            }
+          ]
+        }
+      },
       "/blogs/{id}/comments/{commentId}": {
         "put": {
           "tags": [
@@ -982,6 +1025,23 @@
       }
     },
     "definitions": {
+      "Auth": {
+        "type": "object",
+        "properties": {
+          "_id": {
+            "type": "string",
+            "example": "string"
+          },
+          "username": {
+            "type": "string",
+            "example": "string"
+          },
+          "password": {
+            "type": "string",
+            "example": "string"
+          }
+        }
+      },
       "User": {
         "type": "object",
         "properties": {
@@ -1001,7 +1061,7 @@
             "type": "string",
             "example": "string"
           },
-          "subscriberEmail": {
+          "email": {
             "type": "string",
             "example": "string"
           },
@@ -1040,11 +1100,11 @@
           },
           "createdAt": {
             "type": "string",
-            "example": "2/6/2023, 1:44:33 PM"
+            "example": "2/6/2023, 2:22:59 PM"
           },
           "updatedAt": {
             "type": "string",
-            "example": "2/6/2023, 1:44:33 PM"
+            "example": "2/6/2023, 2:22:59 PM"
           },
           "__v": {
             "type": "number",
@@ -1074,11 +1134,11 @@
           },
           "createdAt": {
             "type": "string",
-            "example": "2/6/2023, 1:44:33 PM"
+            "example": "2/6/2023, 2:22:59 PM"
           },
           "updatedAt": {
             "type": "string",
-            "example": "2/6/2023, 1:44:33 PM"
+            "example": "2/6/2023, 2:22:59 PM"
           },
           "__v": {
             "type": "number",

@@ -6,11 +6,18 @@ const userSchema = new Schema(({
     password: { type: String, required: true },
     fullName: { type: String, required: true },
     userType: { type: String, default: 'user' },
-    subscriberEmail: String
+    email: String
 }))
 
 const User = model('User', userSchema)
 
+const authSchema = new Schema({
+    _id: {type: String, required: false, selected: false},
+    username: { required: true, type: String },
+    password: { type: String, required: true }
+})
+
+registerSchema('Auth', authSchema, { orm: 'mongoose' })
 registerSchema('User', userSchema, { orm: 'mongoose' })
 export default User
 
