@@ -6,6 +6,7 @@ import chaiHttp from 'chai-http';
 // import User from '../models/user';
 import Blog from '../models/blog';
 import app from '../';
+import mongoose from 'mongoose';
 
 chai.use(chaiHttp);
 const expect = chai.expect;
@@ -25,6 +26,9 @@ describe('Blogs API', () => {
                 done();
             });
     });
+
+
+
 
     describe('GET /blogs', () => {
         it('should return a list of blogs', (done) => {
@@ -90,14 +94,13 @@ describe('Blogs API', () => {
                 author: 'delete-test-' + random(),
                 content: 'delete-test-content-' + random()
             })
-            
+
             await new_blog.save();
-            chai.request(app)
+            const res = await chai.request(app)
                 .delete('/blogs/' + new_blog._id.toString())
                 .set('Authorization', `Basic ${authToken}`)
-                .end((err, res) => {
-                    expect(res).to.have.status(204);
-                });
+            expect(res).to.have.status(204);
+
         });
     });
 });

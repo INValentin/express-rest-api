@@ -1,17 +1,27 @@
-const storeKey = "contacts";
+const isAdmin = localStorage.getItem('authToken')?.length ? true : false;
+console.log(localStorage.getItem('authToken'))
 
-if (localStorage.getItem(storeKey) === null) {
-    localStorage.setItem(storeKey, '[]')
+if (isAdmin) {
+    if (window.location.href.includes('/contacts.html')) {
+        window.location.href = '/admin-contacts.html'
+    }
 }
 
-/**@type {Array} */
-let contacts = JSON.parse(localStorage.getItem(storeKey))
-
+const init = async () => {
+    API.request(API.contacts.list,
+        contacts => {
+            showContacts(contacts)
+        },
+        error => console.error("List contacts failed", { error })
+    )
+}
+if (isAdmin) {
+    init()
+}
 
 const contactListEl = document.querySelector(".contact-list")
 /**@type {HTMLTemplateElement} */
 const contactTemp = document.getElementById("contact-template")
-
 
 // elements
 const form = document.getElementById("contact-form")
@@ -19,14 +29,12 @@ const nameInput = document.getElementById("contact-names")
 const emailInput = document.getElementById("contact-email")
 const messageInput = document.getElementById("contact-message")
 
-form.addEventListener("submit", e => {
-    e.preventDefault()
-    addContact()
-})
-
-
-// show contacts if any
-showContacts()
+if (!isAdmin) {
+    form.addEventListener("submit", e => {
+        e.preventDefault()
+        addContact()
+    })
+}
 
 function addContact() {
     const names = nameInput.value
@@ -34,20 +42,24 @@ function addContact() {
     const message = messageInput.value
 
     if ([names, email, message].some(value => value.trim() === "")) {
-        return alert("Please fill all the fields!")
+        return handleShowError("Please fill all the fields!")
     }
 
-    const contact = { names, email, message }
+    const contact = { fullName: names, email, message }
 
-    contacts.push(contact)
-    form.reset()
-    localStorage.setItem(storeKey, JSON.stringify(contacts))
-    alert("Saved!")
-    showContacts()
+    API.request(
+        () => API.contacts.create(JSON.stringify(contact)),
+        async contact => {
+            console.log("Contact created", { contact });
+            alert("Contact was sent successfully!")
+            form.reset()
+        },
+        error => console.error("Contact create failed", { error })
+    )
 }
 
 
-function showContacts() {
+function showContacts(contacts) {
     contactListEl.innerHTML = `<h3>Saved Contacts!</h3>`
 
     if (contacts.length === 0) {
@@ -58,13 +70,17 @@ function showContacts() {
 
     contacts.forEach((contact, i) => {
         let contactEl = contactTemp.content.firstElementChild.cloneNode(true)
-        contactEl.querySelector(".contact-name").innerHTML = contact.names
+        contactEl.querySelector(".contact-name").innerHTML = contact.fullName
         contactEl.querySelector(".contact-email").innerHTML = contact.email
         contactEl.querySelector(".contact-message").innerHTML = contact.message
         contactEl.querySelector(".contact-remove").addEventListener("click", e => {
-            contacts.splice(i, 1)
-            localStorage.setItem(storeKey, JSON.stringify(contacts))
-            showContacts()
+            API.request(() => API.contacts.delete(contact._id),
+                () => {
+                    console.log("Contact deleted");
+                    contactEl.remove()
+                },
+                error => console.error("Contact delete failed", { error })
+            )
         })
 
         contactListEl.appendChild(contactEl)

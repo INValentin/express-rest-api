@@ -59,7 +59,6 @@ export async function getBlogComments(req, res) {
 
 export async function createBlogComment(req, res) {
     const { user, comment } = req.body
-    console.log(req.body);
     if (!comment) return res.status(400).json({ error: "comment is required" })
 
     const blog = await Blog.findById(req.params.id)

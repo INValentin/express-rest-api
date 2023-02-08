@@ -12,16 +12,21 @@
 </head>
 
 <body>
+<div class="error-toast">
+        <span>Error: Something went completly wrong!</span>
+        <button class="error-close"><ion-icon name="close-circle-outline"></ion-icon></button>
+    </div>
     <main class="full">
-        <form action="" class="login">
+        <form id="signup-form" action="" class="login">
             <h1 style="text-align: center;">Signup</h1>
-            <input type="text" placeholder="Full Name">
-            <input type="email" placeholder="email">
-            <input type="text" placeholder="Password">
-            <a class="btn" href="./login.html">Signup</a>
+            <input id="fullname" type="text" placeholder="Full name">
+            <input id="username" type="text" placeholder="username">
+            <input id="password" type="password" placeholder="Password">
+            <button style="display: flex; align-items: center;gap: 10px;" id="login-button" type="submit" class="btn"><span style="display: none;" id="login-loader" class="loader inline"></span>Signup</button>
             <a href="./login.html" class="link">Login</a>
         </form>
     </main>
+    <script src="./js/signup.js"></script>
 </body>
 
 </html>

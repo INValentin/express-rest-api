@@ -48,9 +48,9 @@ async function addBlog() {
     const id = Date.now()
     const blog = { title, content }
 
-    form.reset()
     API.request(() => API.blogs.create(JSON.stringify(blog)),
         async blog => {
+            form.reset()
             await init()
             console.log("Blog created", { blog })
         },
@@ -81,9 +81,9 @@ function showBlogs(blogs) {
         // })
         blogEl.querySelector(".blog-remove").addEventListener("click", e => {
             if (window.confirm("Confirm Delete?")) {
-                blogEl.remove()
                 API.request(() => API.blogs.delete(blog._id),
                     () => {
+                        blogEl.remove()
                         console.log("Blog deleted");
                     },
                     error => console.error("Blog not deleted", { error })

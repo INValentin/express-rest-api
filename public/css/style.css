@@ -117,10 +117,50 @@ nav li a.nav-btn {
     border: 2px solid;
     border-bottom-color: transparent;
     border-radius: 50%;
-    width: 40px;
-    height: 40px;
+    /* width: 40px;
+    height: 40px; */
+    padding: 1rem;
     margin: 3rem auto;
     animation:  spin 2s infinite;
+}
+
+.loader.inline {
+    padding: .5rem;
+    margin: 2px 4px;
+    animation:  spin 1.4s infinite;
+    display: inline-block;
+}
+
+.error-toast {
+    padding: .5rem;
+    border-radius: 10px;
+    background-color: red;
+    color: white;
+    font-size: medium;
+    /* font-weight: bold; */
+    display: none;
+    align-items: center;
+    gap: .5rem;
+    width: fit-content;
+    margin: 0.5rem;
+    position: fixed;
+    z-index: 1000;
+    top: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    transition: .3s;
+}
+
+.error-toast button.error-close {
+    padding: 0.25rem;
+    font-size: x-large;
+    border: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: white;
+    color: red;
+    border-radius: 999px;
 }
 
 nav li a.nav-btn.nav-action {

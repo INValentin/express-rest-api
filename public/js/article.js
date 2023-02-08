@@ -50,11 +50,11 @@ window.addEventListener("DOMContentLoaded", async e => {
         }
         const comment = { comment: message }
         // console.log({comment})
-        commentForm.reset()
         API.request(
             () => API.blogs.commentToAblog(articleId, JSON.stringify(comment)),
             (cmt) => {
                 console.log("comment created", { cmt })
+                commentForm.reset()
                 getComments()
             },
             error => console.error("comment create failed", { error })
@@ -86,8 +86,8 @@ window.addEventListener("DOMContentLoaded", async e => {
             if (commentDelete) {
                 commentDelete.addEventListener("click", async e => {
                     if (confirm("Confirm delete comment?")) {
-                        commentEl.remove();
                         API.request(() => API.blogs.commentToAblog(articleId), () => {
+                            commentEl.remove();
                             console.log("comment deleted");
                         }, error => console.error("Comment delete failed", { error }))
                     }

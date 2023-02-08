@@ -25,6 +25,7 @@ export async function getContact(req, res) {
     try {
         const contact = await Contact.findById(req.params.id)
         if (!contact) return res.status(404).json({ error: "Contact not found" })
+        res.json(contact)
     } catch (error) {
         console.log("Can't fetch a contact: \n", error);
         res.status(500).json({ error: "Can't fetch contacts" })

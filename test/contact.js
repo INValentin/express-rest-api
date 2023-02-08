@@ -1,6 +1,6 @@
 // process.env.NODE_ENV = 'test';
 // process.env.PORT = 5017
-
+import mongoose from 'mongoose';
 import chai from 'chai';
 import chaiHttp from 'chai-http';
 // import Contact from '../models/contact';
@@ -25,6 +25,7 @@ describe('Contacts API', () => {
                 done();
             });
     });
+
 
     describe('GET /contacts', () => {
         it('should return a list of contacts', (done) => {
@@ -64,16 +65,13 @@ describe('Contacts API', () => {
     describe('GET /contacts/:id', () => {
         it('should GET a single contact', async () => {
             const existingContact = await Contact.findOne();
-            chai.request(app)
+            const res = await chai.request(app)
                 .get(`/contacts/${existingContact._id.toString()}`)
-                .end((err, res) => {
-                    expect(res).to.have.status(200);
-                    expect(res.body).to.be.an('object');
-                    expect(res.body.fullName).to.equal(existingContact.fullName);
-                    expect(res.body.message).to.equal(existingContact.message);
-                    expect(res.body.email).to.equal(existingContact.email);
-                    // done();
-                });
+            expect(res).to.have.a.status(200);
+            expect(res.body).to.be.an('object');
+            expect(res.body.fullName).to.equal(existingContact.fullName);
+            expect(res.body.message).to.equal(existingContact.message);
+            expect(res.body.email).to.equal(existingContact.email);
         });
     });
 
@@ -83,16 +81,13 @@ describe('Contacts API', () => {
             const existingContact = await Contact.findOne();
             const updatedContact = { message: existingContact.message + '_' + random() }
 
-            chai.request(app)
+            const res = await chai.request(app)
                 .put(`/contacts/${existingContact._id.toString()}`)
                 .set('Authorization', `Basic ${authToken}`)
                 .send(updatedContact)
-                .end((err, res) => {
-                    expect(res).to.have.status(200);
-                    expect(res.body).to.be.an('object');
-                    expect(res.body.message).to.equal(updatedContact.message);
-                    // done();
-                });
+            expect(res).to.have.status(200);
+            expect(res.body).to.be.an('object');
+            expect(res.body.message).to.equal(updatedContact.message);
         });
     });
 
@@ -105,12 +100,10 @@ describe('Contacts API', () => {
             })
 
             await new_contact.save();
-            chai.request(app)
+            const res = await chai.request(app)
                 .delete('/contacts/' + new_contact._id.toString())
                 .set('Authorization', `Basic ${authToken}`)
-                .end((err, res) => {
-                    expect(res).to.have.status(204);
-                });
+            expect(res).to.have.status(204);
         });
     });
 });

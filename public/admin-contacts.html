@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contact</title>
+    <link rel="stylesheet" href="./css/style.css">
+    <script type="module" src="https://unpkg.com/ionicons@4.5.10-0/dist/ionicons/ionicons.esm.js"></script>
+    <script src="./js/API.js"></script>
+</head>
+
+<body>
+<div class="error-toast">
+        <span>Error: Something went completly wrong!</span>
+        <button class="error-close"><ion-icon name="close-circle-outline"></ion-icon></button>
+    </div>
+    <header>
+        <button id="menu-btn"><ion-icon size="large" name="menu"></ion-icon></button>
+        <nav>
+            <button id="menu-close"> <ion-icon size="large" name="close-circle-outline"></ion-icon></button>
+
+            <ul>
+                <li><a href="./index.html">Home</a></li>
+                <li><a href="./portifolio.html">Portifolio</a></li>
+                <li><a href="./blog.html">Blog</a></li>
+                <li><a class="active" href="./contact.html">Contact</a></li>
+                <li><a href="./about.html">About</a></li>
+            </ul>
+           <ul id="ul-btn-nav">
+                <li>
+                    <a href="./login.html" class="nav-btn">Login</a>
+                </li>
+                <li>
+                    <a class="nav-btn" href="./signup.html">Signup</a>
+                </li>
+            </ul>
+        </nav>
+    </header>
+    <main style="margin: 0;">
+        <section style="display: block; width: 100%;">
+            <div class="right" style="max-width: 600px; margin: auto;">
+                <div style="max-width: 100%;" class="contact-list">
+                    <span class="loader"></span>
+                    <template id="contact-template">
+
+                        <div class="user-contact">
+                            <div class="contact-name">My Name</div>
+                            <div class="contact-email">developer@life.earth</div>
+                            <div class="contact-message">Letter from underground.</div>
+                            <div class="contact-message"><button class="contact-remove">Delete?</button></div>
+                        </div>
+                    </template>
+                </div>
+            </div>
+        </section>
+    </main>
+    <footer>
+        <span>&copy; ISHIMWE, 2022</span>
+    </footer>
+
+    <script src="./js/contactStorage.js"></script>
+    <script src="./js/menu.js"></script>
+</body>
+
+</html>

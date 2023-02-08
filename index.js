@@ -30,7 +30,7 @@ app.use(json())
 // app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument))
 
 if (process.env.NODE_ENV === 'test') {
-    app.use(morgan('combined'));
+    app.use(morgan('short'));
 }
 
 app.use(express.static("public"));

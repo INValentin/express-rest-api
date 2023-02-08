@@ -4,16 +4,31 @@
   "description": "",
   "main": "index.js",
   "type": "module",
+  "nyc": {
+    "require": [
+      "@babel/register"
+    ],
+    "reporter": [
+      "lcov",
+      "text"
+    ],
+    "sourceMap": false,
+    "instrument": false
+  },
   "scripts": {
     "dev": "nodemon --no-warnings --experimental-specifier-resolution=node ./index.js",
     "start": "node  --experimental-specifier-resolution=node ./index.js",
-    "test": "mocha --timeout 100000 -- --no-warnings --experimental-specifier-resolution=node",
-    "coverage": "nyc npm test && nyc report --reporter=text-lcov | coveralls"
+    "nyc": "nyc npm test && nyc report --reporter=text-lcov | coveralls",
+    "build": "babel index.js -d src",
+    "test": "c8 --all  --x public/ --x coverage/ mocha --timeout 100000 --exit -- --no-warnings --experimental-specifier-resolution=node",
+    "test-old": "mocha --timeout 100000 --exit -- --no-warnings --experimental-specifier-resolution=node",
+    "prepublish": "npm run build"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "c8": "^7.12.0",
     "cors": "^2.8.5",
     "dotenv": "^16.0.3",
     "express": "^4.18.2",
@@ -22,8 +37,14 @@
     "swaggiffy": "^1.0.5"
   },
   "devDependencies": {
+    "@babel/cli": "^7.20.7",
+    "@babel/core": "^7.20.12",
+    "@babel/preset-env": "^7.20.2",
+    "@babel/register": "^7.18.9",
+    "babel-plugin-istanbul": "^6.1.1",
     "chai": "^4.3.7",
     "chai-http": "^4.3.0",
+    "cross-env": "^7.0.3",
     "mocha": "^10.2.0",
     "morgan": "^1.10.0",
     "nyc": "^15.1.0"

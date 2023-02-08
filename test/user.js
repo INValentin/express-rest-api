@@ -1,6 +1,6 @@
 // process.env.NODE_ENV = 'test';
 // process.env.PORT = 5017
-
+import mongoose from 'mongoose';
 import chai from 'chai';
 import chaiHttp from 'chai-http';
 // import User from '../models/user';
@@ -25,6 +25,7 @@ describe('Users API', () => {
                 done();
             });
     });
+
 
     describe('GET /users', () => {
         it('should return a list of users', (done) => {
@@ -63,15 +64,12 @@ describe('Users API', () => {
     describe('GET /users/:id', () => {
         it('should GET a single user', async () => {
             const existingUser = await User.findOne();
-            chai.request(app)
+            const res = await chai.request(app)
                 .get(`/users/${existingUser._id.toString()}`)
-                .end((err, res) => {
-                    expect(res).to.have.status(200);
-                    expect(res.body).to.be.an('object');
-                    expect(res.body.fullName).to.equal(existingUser.fullName);
-                    expect(res.body.username).to.equal(existingUser.username);
-                    // done();
-                });
+            expect(res).to.have.status(200);
+            expect(res.body).to.be.an('object');
+            expect(res.body.fullName).to.equal(existingUser.fullName);
+            expect(res.body.username).to.equal(existingUser.username);
         });
     });
 
@@ -81,16 +79,13 @@ describe('Users API', () => {
             const existingUser = await User.findOne();
             const updatedUser = { fullName: existingUser.fullName + '_' + random() }
 
-            chai.request(app)
+            const res = await chai.request(app)
                 .put(`/users/${existingUser._id.toString()}`)
                 .set('Authorization', `Basic ${authToken}`)
                 .send(updatedUser)
-                .end((err, res) => {
-                    expect(res).to.have.status(200);
-                    expect(res.body).to.be.an('object');
-                    expect(res.body.fullName).to.equal(updatedUser.fullName);
-                    // done();
-                });
+            expect(res).to.have.status(200);
+            expect(res.body).to.be.an('object');
+            expect(res.body.fullName).to.equal(updatedUser.fullName);
         });
     });
 
@@ -103,12 +98,11 @@ describe('Users API', () => {
             })
 
             await new_user.save();
-            chai.request(app)
+            const res = await chai.request(app)
                 .delete('/users/' + new_user._id.toString())
                 .set('Authorization', `Basic ${authToken}`)
-                .end((err, res) => {
-                    expect(res).to.have.status(204);
-                });
+            expect(res).to.have.status(204);
+
         });
     });
 });

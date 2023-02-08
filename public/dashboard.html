@@ -12,6 +12,10 @@
 </head>
 
 <body>
+<div class="error-toast">
+        <span>Error: Something went completly wrong!</span>
+        <button class="error-close"><ion-icon name="close-circle-outline"></ion-icon></button>
+    </div>
     <header>
         <button id="menu-btn"><ion-icon size="large" name="menu"></ion-icon></button>
         <nav>
@@ -26,7 +30,7 @@
             </ul>
             <ul>
                 <li>
-                    <a href="./login.html" class="nav-btn nav-action">Logout</a>
+                    <a id="logout-btn" href="#!" class="nav-btn nav-action">Logout</a>
                 </li>
             </ul>
             </ul>
@@ -51,7 +55,8 @@
                 </div>
             </div>
             <div class="right">
-                <a href="./create-blog.html" class="btn blog-link">Create a blog</a>
+                <a href="./create-blog.html" class="btn blog-link">Manage blogs</a>
+                <a href="./admin-contacts.html" class="btn blog-link">View contacts</a>
                 <div class="dash-cards">
                     <div class="dash-card">
                         <div class="dash-card-title">Visitors</div>
