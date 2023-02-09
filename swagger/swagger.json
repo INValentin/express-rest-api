@@ -1087,6 +1087,10 @@
             "type": "string",
             "example": "string"
           },
+          "image": {
+            "type": "string",
+            "example": "string"
+          },
           "likes": {
             "type": "array"
           },
@@ -1100,11 +1104,11 @@
           },
           "createdAt": {
             "type": "string",
-            "example": "2/8/2023, 6:23:23 PM"
+            "example": "2/9/2023, 6:08:39 PM"
           },
           "updatedAt": {
             "type": "string",
-            "example": "2/8/2023, 6:23:23 PM"
+            "example": "2/9/2023, 6:08:39 PM"
           },
           "__v": {
             "type": "number",
@@ -1134,11 +1138,11 @@
           },
           "createdAt": {
             "type": "string",
-            "example": "2/8/2023, 6:23:23 PM"
+            "example": "2/9/2023, 6:08:39 PM"
           },
           "updatedAt": {
             "type": "string",
-            "example": "2/8/2023, 6:23:23 PM"
+            "example": "2/9/2023, 6:08:39 PM"
           },
           "__v": {
             "type": "number",

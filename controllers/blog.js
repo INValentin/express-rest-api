@@ -1,4 +1,5 @@
 import Blog from '../models/blog.js'
+import path from 'path'
 
 export async function getBlogs(req, res) {
     const blogs = await Blog.find().sort({ _id: -1 }).limit(15)
@@ -7,7 +8,17 @@ export async function getBlogs(req, res) {
 
 export async function createBlog(req, res) {
     try {
+        console.log(req.headers)
         const blog = new Blog({ ...req.body })
+
+        if (req.files.blogimage) {
+            const image = req.files.blogimage
+            const imgPath = path.join(process.cwd(), `uploads/${image.name}`)
+            image.mv(imgPath, (err) => {
+                console.log("Moving uploaded Image failed:\n ", err)
+            })
+            blog.image = image.name
+        }
         await blog.save()
         res.status(201).json(blog)
     } catch (error) {
@@ -101,7 +112,7 @@ export async function likeBlog(req, res) {
     const blog = await Blog.findById(req.params.id)//.populate('likes.*')
     if (!blog) return res.status(404).json({ error: 'Blog not found' })
     // Already liked
-    const likeIdx = blog.likes.findIndex(_id => _id = req.user._id)
+    const likeIdx = blog.likes.findIndex(_id => _id.toString() === req.user._id.toString())
 
     if (likeIdx === -1) {
         blog.likes.push(req.user)
