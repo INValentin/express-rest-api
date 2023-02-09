@@ -4,6 +4,12 @@ const nav = document.querySelector("nav")
 const navBtnUl = document.querySelector("#ul-btn-nav")
 let logoutBtn = document.querySelector("#logout-btn")
 
+// redirect normal users from dashboard
+if (localStorage.getItem('isAdmin') !== 'true' && location.pathname.includes('dashboard.html')) {
+    window.location.href = '/'
+}
+
+
 menuCloseBtn.addEventListener("click", e => {
     nav.style.display = "none"
 })
@@ -25,7 +31,17 @@ if (typeof window.localStorage.getItem('authToken') === 'string') {
         liEl.appendChild(logoutBtn)
         navBtnUl.innerHTML = ''
         navBtnUl.appendChild(liEl)
+        
     }
+    if (localStorage.getItem('isAdmin') === 'true') {
+        const parentEl = logoutBtn.parentElement
+        
+        const dashboardLink = logoutBtn.cloneNode(true)
+        dashboardLink.innerHTML = 'Dashboard'
+        dashboardLink.href = '/dashboard.html'
+        parentEl.insertBefore(dashboardLink, logoutBtn)
+    }
+
     logoutBtn.addEventListener("click", e => {
         localStorage.removeItem('authToken')
         localStorage.removeItem('isAdmin')

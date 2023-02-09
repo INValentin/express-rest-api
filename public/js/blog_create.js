@@ -17,6 +17,8 @@ const form = document.getElementById("blog-form")
 const nameInput = document.getElementById("blog-names")
 const emailInput = document.getElementById("blog-email")
 const messageInput = document.getElementById("blog-message")
+/**@type {HTMLInputElement} */
+const imageInput = document.getElementById("blog-image")
 
 form.addEventListener("submit", e => {
     e.preventDefault()
@@ -45,10 +47,26 @@ async function addBlog() {
         return alert("Please fill all the fields!")
     }
 
-    const id = Date.now()
-    const blog = { title, content }
+    const blogData = new FormData()
+    blogData.append('title', title)
+    blogData.append('content', content)
 
-    API.request(() => API.blogs.create(JSON.stringify(blog)),
+    if (imageInput.files.length) {
+        blogData.append('blogimage', imageInput.files.item(0))
+        console.log("Send binary", imageInput.files.item(0));
+    }
+
+
+    const blogCreate = () => fetch(BASE_URL + '/blogs', {
+        method: 'POST',
+        body: blogData,
+        headers: {
+            'Authorization': 'Basic ' + (localStorage.getItem('authToken') ?? '')
+        }
+    })
+
+    API.request(
+        () => blogCreate(),
         async blog => {
             form.reset()
             await init()
@@ -69,11 +87,13 @@ function showBlogs(blogs) {
     }
 
     blogs.forEach((blog, i) => {
-        console.log(blogs)
         let blogEl = blogTemp.content.firstElementChild.cloneNode(true)
         blogEl.querySelector(".blog-name").innerHTML = blog.title
         blogEl.querySelector(".blog-email").innerHTML = ''
         blogEl.querySelector(".blog-message").innerHTML = blog.content
+        if (blog.image) {
+            blogEl.querySelector(".blog-image").src =   BASE_URL + '/' + blog.image
+        }
         // blogEl.querySelector(".blog-comment .blog-count").innerHTML = blog.comments.length
         blogEl.querySelector(".blog-readmore").href += blog._id
         // blogEl.querySelector(".blog-like").addEventListener("click", e => {

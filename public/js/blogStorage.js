@@ -39,16 +39,25 @@ function showBlogs(blogs) {
         blogEl.querySelector(".blog-name").innerHTML = blog.title
         blogEl.querySelector(".blog-email").innerHTML = ''
         blogEl.querySelector(".blog-message").innerHTML = blog.content
+        if (blog.image) {
+            blogEl.querySelector(".blog-image").src = BASE_URL + '/' + blog.image
+        }
         blogEl.querySelector(".blog-like .blog-count").innerHTML = blog.likes.length
         blogEl.querySelector(".blog-comment .blog-count").innerHTML = blog.comments.length
         blogEl.querySelector(".blog-readmore").href += blog._id
-        blogEl.querySelector(".blog-like").addEventListener("click", async e => {
+        blogEl.querySelector(".blog-like").addEventListener("click", e => {
+            let likeCount = blogEl.querySelector(".blog-like .blog-count")
+            likeCount.innerHTML = `<span class="inline loader"></span>`
+
             API.request(() => API.blogs.likeAblog(blog._id),
                 result => {
                     console.log("Liked a blog", { result });
-                    blogEl.querySelector(".blog-like .blog-count").innerHTML =result?.likes ?? blog.likes.length + 1
+                    likeCount.innerHTML = result?.likes ?? blog.likes.length + 1
                 },
-                error => console.error("Can't like a blog", { error })
+                error => {
+                    likeCount.innerHTML = blog.likes.length
+                    console.error("Can't like a blog", { error })
+                }
             )
         })
 

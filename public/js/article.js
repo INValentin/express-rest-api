@@ -3,6 +3,7 @@ window.addEventListener("DOMContentLoaded", async e => {
     const articleTitle = document.querySelector(".article-title")
     const articleBody = document.querySelector(".article-message")
     const articleDelete = document.querySelector(".article-remove")
+    const articleImage = document.querySelector(".article-img")
     const articleAuthor = document.querySelector(".article-author")
 
     /**@type {HTMLTemplateElement} */
@@ -64,6 +65,9 @@ window.addEventListener("DOMContentLoaded", async e => {
 
     articleTitle.innerHTML = article.title
     articleBody.innerHTML = article.content
+    if (article.image) {
+        articleImage.src = BASE_URL + '/' + article.image
+    }
 
     async function getComments() {
         /**@type {Array} */
@@ -86,7 +90,7 @@ window.addEventListener("DOMContentLoaded", async e => {
             if (commentDelete) {
                 commentDelete.addEventListener("click", async e => {
                     if (confirm("Confirm delete comment?")) {
-                        API.request(() => API.blogs.commentToAblog(articleId), () => {
+                        API.request(() => API.blogs.deleteAblogComment(articleId, comment.id), () => {
                             commentEl.remove();
                             console.log("comment deleted");
                         }, error => console.error("Comment delete failed", { error }))

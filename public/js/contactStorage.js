@@ -1,8 +1,9 @@
-const isAdmin = localStorage.getItem('authToken')?.length ? true : false;
-console.log(localStorage.getItem('authToken'))
+const isAdmin = localStorage.getItem('isAdmin') === 'true';
+console.log(localStorage.getItem('isAdmin'))
 
 if (isAdmin) {
-    if (window.location.href.includes('/contacts.html')) {
+    if (window.location.href.includes('/contact.html')) {
+        console.log("Redirect");
         window.location.href = '/admin-contacts.html'
     }
 }
@@ -30,6 +31,7 @@ const emailInput = document.getElementById("contact-email")
 const messageInput = document.getElementById("contact-message")
 
 if (!isAdmin) {
+    console.log(form)
     form.addEventListener("submit", e => {
         e.preventDefault()
         addContact()
@@ -60,7 +62,7 @@ function addContact() {
 
 
 function showContacts(contacts) {
-    contactListEl.innerHTML = `<h3>Saved Contacts!</h3>`
+    contactListEl.innerHTML = `<h3>Contact Messages!</h3>`
 
     if (contacts.length === 0) {
         contactListEl.innerHTML += `<h3 style="color: var(--secondary)">No saved contacts!</h3>`

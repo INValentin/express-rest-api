@@ -42,8 +42,12 @@
         <article class="blog-section">
             <div class="left">
                 <h2>Create a blog.</h2>
-                <form action="#" id="blog-form" class="blog blog_form">
+                <form action="#" style="display: block; max-width: 600px;" id="blog-form" class="blog blog_form">
                     <input id="blog-names" style="width: 100%;" type="text" placeholder="Title">
+                   <!-- <label style="display: block;" for="blog-image">
+                        <h4 style="color: var(--secondary)">Choose image:</h4>
+                    </label> -->
+                    <input name="blogimage" id="blog-image" style="width: 100%;background-color: white;margin: 1rem 0;" type="file" accept="image/*">
                     <textarea id="blog-message" placeholder="Article..."></textarea>
                     <button class="blog-form-button" form="blog-form">Create a blog</button>
                 </form>
@@ -56,6 +60,7 @@
                             <div class="blog-name">My Name</div>
                             <div class="blog-email">developer@life.earth</div>
                             <div class="blog-message">Letter from underground.</div>
+                            <img class="blog-image" />
                             <div class="blog-message"><a href="./article_admin.html?id=" class="blog-readmore">Read more</a></div>
                             <div class="blog-message"><button class="blog-remove">Delete?</button></div>
                         </div>

@@ -46,10 +46,10 @@ const request = (url, options = {}) => {
     return fetch(BASE_URL + url, {
         ...options,
         headers: {
-            ...(options.headers || {}),
             'Accept': '*/*',
             'Authorization': 'Basic ' + (localStorage.getItem('authToken') ?? ''),
-            'Content-Type': 'application/json'
+            'Content-Type': 'application/json',
+            ...(options.headers || {}),
         }
     })
 }
@@ -60,8 +60,8 @@ function apiGenerator(route) {
         list: () => {
             return request(`/${route}`)
         },
-        create: body => {
-            return request(`/${route}`, { body, method: 'POST' })
+        create: (body, headers = {}) => {
+            return request(`/${route}`, { body, method: 'POST', headers })
         },
         get: (id) => request(`/${route}/${id}`),
         update: (id, body) => {
@@ -97,7 +97,7 @@ function handleShowError(/** @type {String} */ error) {
     const errorEl = document.querySelector('.error-toast')
     const closeBtn = errorEl.querySelector('button.error-close')
 
-    errorEl.querySelector("span").innerHTML = error === 'Failed to fetch' ? 'Connection failed!': error
+    errorEl.querySelector("span").innerHTML = error === 'Failed to fetch' ? 'Connection failed!' : error
     errorEl.style.display = 'flex'
     let timeout = setTimeout(() => errorEl.style.display = "none", 5000)
 

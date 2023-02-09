@@ -12,7 +12,7 @@
 </head>
 
 <body>
-<div class="error-toast">
+    <div class="error-toast">
         <span>Error: Something went completly wrong!</span>
         <button class="error-close"><ion-icon name="close-circle-outline"></ion-icon></button>
     </div>
@@ -28,7 +28,7 @@
                 <li><a href="./contact.html">Contact</a></li>
                 <li><a href="./about.html">About</a></li>
             </ul>
-           <ul id="ul-btn-nav">
+            <ul id="ul-btn-nav">
                 <li>
                     <a href="./login.html" class="nav-btn">Login</a>
                 </li>
@@ -42,20 +42,17 @@
         <article class="article">
             <p style="display: flex; margin-bottom: 0; justify-content: flex-end;">Viewing as
                 &nbsp;<u><strong>Admin</strong></u></p>
-            <h1 class="article-title" style="margin-top: 5px;"> Article Title</h1>
-            <div>
-                by <strong class="article-author">Author</strong>
-            </div>
+            <h4 class="article-title"></h4>
             <div class="right">
                 <div class="article-message">
-                    Lorem, ipsum dolor sit amet consectetur adipisicing elit. Sunt, quas cupiditate error, distinctio
-                    dolorem reiciendis consequatur praesentium molestiae debitis veniam rerum deleniti impedit quidem
-                    quia! Iste porro quam qui excepturi!
+                    <span class="inline loader"></span>
                 </div>
+                <img class="article-img" />
             </div>
+
             <form action="" class="comment-form">
                 <h3>Add comment</h3>
-                <input type="text" placeholder="Your name" id="comment-author">
+                <!-- <input type="text" placeholder="Your name" id="comment-author"> -->
                 <textarea id="comment-message" placeholder="Comment here.."></textarea>
                 <button class="btn">Comment</button>
             </form>
