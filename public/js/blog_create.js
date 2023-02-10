@@ -90,7 +90,7 @@ function showBlogs(blogs) {
         let blogEl = blogTemp.content.firstElementChild.cloneNode(true)
         blogEl.querySelector(".blog-name").innerHTML = blog.title
         blogEl.querySelector(".blog-email").innerHTML = ''
-        blogEl.querySelector(".blog-message").innerHTML = blog.content
+        blogEl.querySelector(".blog-message").innerHTML = blog.content.slice(0, 200) + (blog.content.length > 200 ? '...' : '')
         if (blog.image) {
             blogEl.querySelector(".blog-image").src =   BASE_URL + '/' + blog.image
         }
