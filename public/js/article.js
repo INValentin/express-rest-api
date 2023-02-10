@@ -14,6 +14,9 @@ window.addEventListener("DOMContentLoaded", async e => {
     const commentMessage = document.querySelector("#comment-message")
     const commentList = document.querySelector(".comment-list")
 
+    const blogLikeBtn = document.querySelector('.blog-like')
+    const blogCommentText = document.querySelector('.blog-comment-count')
+
 
     const articleId = new URLSearchParams(location.search.replace("?", "")).get("id")
 
@@ -21,8 +24,8 @@ window.addEventListener("DOMContentLoaded", async e => {
     let blogs = JSON.parse(localStorage.getItem("blogs"))
 
     let article = await (await API.blogs.get(articleId)).json()
-    console.log({article});
-    
+    console.log({ article });
+
     if (!article) {
         window.alert("Article not found")
         window.location.href = "./blog.html"
@@ -69,10 +72,34 @@ window.addEventListener("DOMContentLoaded", async e => {
         articleImage.src = BASE_URL + '/' + article.image
     }
 
+    if (window.localStorage.getItem('isAdmin') !== 'true') {
+        const likeCount = document.querySelector(".blog-like .blog-count")
+        likeCount.innerHTML = article.likes.length
+        blogLikeBtn.addEventListener("click", e => {
+            e.preventDefault()
+            likeCount.innerHTML = `<span class="inline loader"></span>`
+
+            API.request(() => API.blogs.likeAblog(article._id),
+                result => {
+                    console.log("Liked a blog", { result });
+                    likeCount.innerHTML = result.likes
+                },
+                error => {
+                    likeCount.innerHTML = article.likes.length
+                    console.error("Can't like a blog", { error })
+                }
+            )
+        })
+    } else {
+        blogLikeBtn.style.display = 'none'
+    }
+
     async function getComments() {
         /**@type {Array} */
         let comments = await (await API.blogs.getBlogComments(articleId)).json() || article.comments
         commentList.innerHTML = ""
+        blogCommentText.innerHTML = `(${comments?.length}) Add comment`
+
 
         if (comments.length === 0) {
             commentList.innerHTML = `<h4>No comments yet.</h4>`
@@ -100,7 +127,6 @@ window.addEventListener("DOMContentLoaded", async e => {
             }
             commentList.appendChild(commentEl)
         })
-
 
     }
 

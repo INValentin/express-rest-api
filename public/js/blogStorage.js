@@ -16,7 +16,6 @@ blogListEl.innerHTML = "<span class='loader'></span>"
 API.request(API.blogs.list, (blogs => {
     // show blogs if any
     blogs = blogs.slice(0, 10)
-    console.log(blogs);
     if (blogs) {
 
         showBlogs(blogs)
@@ -34,11 +33,10 @@ function showBlogs(blogs) {
     }
 
     blogs.forEach((blog, i) => {
-        console.log(blogs)
         let blogEl = blogTemp.content.firstElementChild.cloneNode(true)
         blogEl.querySelector(".blog-name").innerHTML = blog.title
         blogEl.querySelector(".blog-email").innerHTML = ''
-        blogEl.querySelector(".blog-message").innerHTML = blog.content
+        blogEl.querySelector(".blog-message").innerHTML = blog.content.slice(0, 200) + (blog.content.length > 200 ? '...' : '')
         if (blog.image) {
             blogEl.querySelector(".blog-image").src = BASE_URL + '/' + blog.image
         }

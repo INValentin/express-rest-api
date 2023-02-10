@@ -47,7 +47,13 @@
                 <img class="article-img"/>
                 <hr style="margin: 30px 20px 10px; max-width: 300px;">
                 <form style="padding: 0;" action="" class="comment-form">
-                    <h3 style=" margin:5px 30px 0; font-size: small;">Add comment</h3>
+                    <div style="display: flex; align-items: center;">
+                        <button class="blog-like blog-btn">
+                            <span class="blog-count"></span>
+                            <ion-icon size="large" name="thumbs-up"></ion-icon>
+                        </button>
+                        <h3 class="blog-comment-count" style=" margin:5px 30px 0; font-size: small;">Add comment</h3>
+                    </div>
                     <input type="text" style="display: none;" placeholder="Your name" id="comment-author">
                     <textarea id="comment-message" placeholder="Comment here.."></textarea>
                     <button class="btn">Comment</button>
