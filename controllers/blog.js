@@ -8,16 +8,17 @@ export async function getBlogs(req, res) {
 
 export async function createBlog(req, res) {
     try {
-        console.log(req.headers)
         const blog = new Blog({ ...req.body })
 
-        if (req.files.blogimage) {
+        if (!!req.files?.blogimage) {
             const image = req.files.blogimage
             const imgPath = path.join(process.cwd(), `uploads/${image.name}`)
-            image.mv(imgPath, (err) => {
-                console.log("Moving uploaded Image failed:\n ", err)
-            })
-            blog.image = image.name
+            if (image) {
+                image.mv(imgPath, (err) => {
+                    console.log("Moving uploaded Image failed:\n ", err)
+                })
+                blog.image = image.name
+            }
         }
         await blog.save()
         res.status(201).json(blog)
