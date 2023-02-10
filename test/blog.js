@@ -58,7 +58,13 @@ describe('Blogs API', () => {
                     expect(res.body).to.be.an('object');
                     expect(res.body.title).to.equal(blog.title);
                     expect(res.body.content).to.equal(blog.content);
+
                     done();
+                    // clean up
+                    chai.request(app).delete('/blogs/' + res.body._id.toString())
+                    .set('Authorization', `Basic ${authToken}`).end((err) => {
+                        if (err) console.error("\nclean up error\n", err)
+                    });
                 });
         });
     });
