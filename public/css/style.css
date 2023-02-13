@@ -552,6 +552,7 @@ form.login a.btn {
     color: var(--black-ish);
     min-width: 300px;
     max-width: 900px;
+    align-items: baseline;
 }
 
 .blog-list h3 {

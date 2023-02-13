@@ -14,9 +14,9 @@ const blogTemp = document.getElementById("blog-template")
 
 // elements
 const form = document.getElementById("blog-form")
-const nameInput = document.getElementById("blog-names")
+const titleInput = document.getElementById("blog-names")
 const emailInput = document.getElementById("blog-email")
-const messageInput = document.getElementById("blog-message")
+const contentInput = document.getElementById("blog-message")
 /**@type {HTMLInputElement} */
 const imageInput = document.getElementById("blog-image")
 
@@ -40,8 +40,8 @@ init()
 
 
 async function addBlog() {
-    const title = nameInput.value
-    const content = messageInput.value
+    const title = titleInput?.value
+    const content = contentInput.value
 
     if ([title, content].some(value => value.trim() === "")) {
         return alert("Please fill all the fields!")

@@ -1,3 +1,4 @@
+const isAdmin = window.localStorage.getItem('isAdmin') === 'true'
 window.addEventListener("DOMContentLoaded", async e => {
 
     const articleTitle = document.querySelector(".article-title")
@@ -16,9 +17,14 @@ window.addEventListener("DOMContentLoaded", async e => {
 
     const blogLikeBtn = document.querySelector('.blog-like')
     const blogCommentText = document.querySelector('.blog-comment-count')
+    const updateArticleLink = document.getElementById('update-link')
 
 
     const articleId = new URLSearchParams(location.search.replace("?", "")).get("id")
+
+    if (isAdmin) {
+        // wind
+    }
 
     /**@type {Array} */
     let blogs = JSON.parse(localStorage.getItem("blogs"))
@@ -72,7 +78,7 @@ window.addEventListener("DOMContentLoaded", async e => {
         articleImage.src = BASE_URL + '/' + article.image
     }
 
-    if (window.localStorage.getItem('isAdmin') !== 'true') {
+    if (!isAdmin) {
         const likeCount = document.querySelector(".blog-like .blog-count")
         likeCount.innerHTML = article.likes.length
         blogLikeBtn.addEventListener("click", e => {
@@ -91,7 +97,13 @@ window.addEventListener("DOMContentLoaded", async e => {
             )
         })
     } else {
-        blogLikeBtn.style.display = 'none'
+        if (blogLikeBtn) {
+            blogLikeBtn.style.display = 'none'
+        }
+        console.log(updateArticleLink)
+        if (updateArticleLink) {
+            updateArticleLink.href += articleId
+        }
     }
 
     async function getComments() {
