@@ -1,4 +1,4 @@
-const BASE_URL = location.hostname !== 'andela-express.onrender.com' ? 'http://localhost:5000' : "https://andela-express.onrender.com";
+const BASE_URL = ['127.0.0.1', 'localhost'].includes(location.hostname)  ? 'http://localhost:5000' : "https://andela-express.onrender.com";
 
 
 const login = async (creds) => {
