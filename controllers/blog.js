@@ -39,6 +39,16 @@ export async function getBlog(req, res) {
 
 export async function updateBlog(req, res) {
     try {
+        if (!!req.files?.blogimage) {
+            const image = req.files.blogimage
+            const imgPath = path.join(process.cwd(), `uploads/${image.name}`)
+            if (image) {
+                image.mv(imgPath, (err) => {
+                    console.log("Moving uploaded Image failed:\n ", err)
+                })
+                req.body.image = image.name
+            }
+        }
         const blog = await Blog.findByIdAndUpdate(req.params.id, { ...req.body })
         if (!blog) return res.status(404).json({ error: 'Blog not found' })
         res.json(await Blog.findById(req.params.id))
